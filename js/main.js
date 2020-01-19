@@ -148,7 +148,7 @@ export class ExplorerApp extends LitElement {
   async load () {
     if (!this.user) {
       let userStat = await navigator.filesystem.stat('/profile')
-      this.user = {url: `drive://${userStat.mount.key}/`}
+      this.user = {url: `hd://${userStat.mount.key}`}
     }
 
     // read location information
@@ -339,7 +339,7 @@ export class ExplorerApp extends LitElement {
 
   getShareUrl (item) {
     if (item.stat.mount) {
-      return `drive://${item.stat.mount.key}`
+      return `hd://${item.stat.mount.key}`
     } else if (item.name.endsWith('.goto') && item.stat.metadata.href) {
       return item.stat.metadata.href
     } else {
@@ -619,7 +619,7 @@ export class ExplorerApp extends LitElement {
     return false
   }
 
-  goto (item, newWindow = false, useWebScheme = false) {
+  goto (item, newWindow = false, useHdScheme = false) {
     var url
     if (typeof item === 'string') {
       url = item
@@ -628,11 +628,13 @@ export class ExplorerApp extends LitElement {
     } else {
       url = joinPath(loc.getOrigin(), item.path)
     }
-    if (useWebScheme) {
-      url = changeURLScheme(url, 'web')
+    if (useHdScheme) {
+      if (newWindow) window.open(url)
+      else window.location = url
+    } else {
+      if (newWindow) loc.openUrl(url)
+      else loc.setUrl(url)
     }
-    if (newWindow) loc.openUrl(url)
-    else loc.setUrl(url)
   }
 
   onChangeSelection (e) {

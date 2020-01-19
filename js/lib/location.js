@@ -1,9 +1,9 @@
 var url = location.pathname.slice(1) // slice past the '/'
-if (url && url.startsWith('drive://')) {
-  // remove the 'drive://'
-  history.replaceState(undefined, document.title, window.location.origin + '/' + url.slice('drive://'.length))
+if (url && url.startsWith('hd://')) {
+  // remove the 'hd://'
+  history.replaceState(undefined, document.title, window.location.origin + '/' + url.slice('hd://'.length))
 } else {
-  url = 'drive://' + url
+  url = 'hd://' + url
 }
 var urlp
 try {
@@ -17,11 +17,11 @@ export function getUrl () {
 }
 
 export function setUrl (url) {
-  window.location = `/${url.replace(/^drive:\/\//, '')}`
+  window.location = `/${url.replace(/^hd:\/\//, '')}`
 }
 
 export function openUrl (url) {
-  window.open(`${window.location.origin}/${url.replace(/^drive:\/\//, '')}`)
+  window.open(`${window.location.origin}/${url.replace(/^hd:\/\//, '')}`)
 }
 
 export function getOrigin () {

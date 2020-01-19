@@ -1,7 +1,6 @@
 import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
 import { until } from 'beaker://app-stdlib/vendor/lit-element/lit-html/directives/until.js'
 import bytes from 'beaker://app-stdlib/vendor/bytes/index.js'
-import { changeURLScheme } from 'beaker://app-stdlib/js/strings.js'
 import 'beaker://app-stdlib/js/com/hover-menu.js'
 
 export class DriveInfo extends LitElement {
@@ -51,19 +50,19 @@ export class DriveInfo extends LitElement {
           ${this.renderSize()}
         </p>
         ${this.driveInfo.type === 'unwalled.garden/person' ? html`
-          <div class="bottom-ctrls">
-            ${this.driveInfo.url !== this.userUrl ? '' : html`
+          ${this.driveInfo.url !== this.userUrl ? '' : html`
+            <div class="bottom-ctrls">
               <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My profile</span>
-              <a class="btn" href=${changeURLScheme(this.realUrl, 'web')} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
-            `}
-          </div>
+              <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
+            </div>
+          `}
         ` : this.driveInfo.url === navigator.filesystem.url ? html`
           <div class="bottom-ctrls">
             <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My home drive</span>
           </div>
         ` : html`
           <div class="bottom-ctrls">
-            <a class="btn" href=${changeURLScheme(this.realUrl, 'web')} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
+            <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
           </div>
         `}
       </section>
@@ -77,7 +76,7 @@ export class DriveInfo extends LitElement {
     // -prf
     try {
       this.querySelector('img').removeAttribute('src')
-      this.querySelector('img').setAttribute('src', `${changeURLScheme(this.driveInfo.url, 'web')}/thumb`)
+      this.querySelector('img').setAttribute('src', `${this.driveInfo.url}/thumb`)
     } catch (e) {}
   }
 

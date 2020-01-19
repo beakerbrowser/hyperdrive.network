@@ -29,7 +29,7 @@ export class PathAncestry extends LitElement {
     return html`
       <a
         class="author"
-        href=${'/' + this.driveInfo.url.replace(/^drive:\/\//, '')}
+        href=${'/' + this.driveInfo.url.replace(/^hd:\/\//, '')}
         @dragenter=${this.onDragenter}
         @dragleave=${this.onDragleave}
         @dragover=${this.onDragOver}
@@ -48,7 +48,7 @@ export class PathAncestry extends LitElement {
         <span class="fas fa-fw fa-angle-right"></span>
         <a
           class="name"
-          href=${'/' + this.driveInfo.url.replace(/^drive:\/\//, '') + item.path}
+          href=${'/' + this.driveInfo.url.replace(/^hd:\/\//, '') + item.path}
           @dragenter=${this.onDragenter}
           @dragleave=${this.onDragleave}
           @dragover=${this.onDragOver}
