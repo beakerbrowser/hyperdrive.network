@@ -1,4 +1,4 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
+import { LitElement, html } from '../../vendor/lit-element/lit-element.js'
 import '../com/file/file-display.js'
 
 export class QueryView extends LitElement {

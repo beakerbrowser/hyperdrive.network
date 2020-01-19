@@ -1,11 +1,11 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import { classMap } from 'beaker://app-stdlib/vendor/lit-element/lit-html/directives/class-map.js'
-import { joinPath, pluralize, changeURLScheme } from 'beaker://app-stdlib/js/strings.js'
-import { timeDifference } from 'beaker://app-stdlib/js/time.js'
-import * as toast from 'beaker://app-stdlib/js/com/toast.js'
-import * as contextMenu from 'beaker://app-stdlib/js/com/context-menu.js'
+import { LitElement, html } from '../vendor/lit-element/lit-element.js'
+import { classMap } from '../vendor/lit-element/lit-html/directives/class-map.js'
+import { joinPath, pluralize, changeURLScheme } from './lib/strings.js'
+import { timeDifference } from './lib/time.js'
+import * as toast from './com/toast.js'
+import * as contextMenu from './com/context-menu.js'
 import * as shareMenu from './com/share-menu.js'
-import { getAvailableName } from 'beaker://app-stdlib/js/fs.js'
+import { getAvailableName } from './lib/fs.js'
 import { toSimpleItemGroups, getSubicon } from './lib/files.js'
 import * as loc from './lib/location.js'
 import { constructItems as constructContextMenuItems } from './lib/context-menu.js'
@@ -395,7 +395,7 @@ export class ExplorerApp extends LitElement {
 
   render () {
     return html`
-      <link rel="stylesheet" href="beaker://assets/font-awesome.css">
+      <link rel="stylesheet" href="/css/font-awesome.css">
       <div
         class=${classMap({
           layout: true,
@@ -866,7 +866,7 @@ export class ExplorerApp extends LitElement {
       top: (e.detail.y > document.body.scrollHeight / 2),
       roomy: false,
       noBorders: true,
-      fontAwesomeCSSUrl: 'beaker://assets/font-awesome.css',
+      fontAwesomeCSSUrl: '/css/font-awesome.css',
       style: `padding: 4px 0`,
       items: constructContextMenuItems(this)
     })

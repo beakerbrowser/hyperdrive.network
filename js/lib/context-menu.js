@@ -1,8 +1,8 @@
-import { html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import { writeToClipboard } from 'beaker://app-stdlib/js/clipboard.js'
-import * as toast from 'beaker://app-stdlib/js/com/toast.js'
-import { joinPath } from 'beaker://app-stdlib/js/strings.js'
-import * as loc from '../lib/location.js'
+import { html } from '../../vendor/lit-element/lit-element.js'
+import { writeToClipboard } from '../lib/clipboard.js'
+import * as toast from '../com/toast.js'
+import { joinPath } from './strings.js'
+import * as loc from './location.js'
 
 export function constructItems (app) {
   var items = []

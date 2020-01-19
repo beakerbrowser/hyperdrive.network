@@ -1,4 +1,4 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
+import { LitElement, html } from '../../vendor/lit-element/lit-element.js'
 import * as loc from '../lib/location.js'
 import css from '../../css/view/file.css.js'
 import '../com/file/file-display.js'

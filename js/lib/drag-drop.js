@@ -1,7 +1,7 @@
-import { html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import * as toast from 'beaker://app-stdlib/js/com/toast.js'
-import { joinPath, pluralize } from 'beaker://app-stdlib/js/strings.js'
-import * as contextMenu from 'beaker://app-stdlib/js/com/context-menu.js'
+import { html } from '../../vendor/lit-element/lit-element.js'
+import * as toast from '../com/toast.js'
+import { joinPath, pluralize } from './strings.js'
+import * as contextMenu from '../com/context-menu.js'
 import { doCopy, doMove, doImport, canWriteTo } from './files.js'
 import * as loc from './location.js'
 
@@ -116,7 +116,7 @@ export async function handleDragDropUrls (x, y, targetPath, urls) {
     y,
     roomy: false,
     noBorders: true,
-    fontAwesomeCSSUrl: 'beaker://assets/font-awesome.css',
+    fontAwesomeCSSUrl: '/css/font-awesome.css',
     style: `padding: 4px 0`,
     items
   })

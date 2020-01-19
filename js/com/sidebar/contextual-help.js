@@ -1,8 +1,7 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import * as toast from 'beaker://app-stdlib/js/com/toast.js'
-import { writeToClipboard } from 'beaker://app-stdlib/js/clipboard.js'
-import { joinPath } from 'beaker://app-stdlib/js/strings.js'
-import 'beaker://app-stdlib/js/com/hover-menu.js'
+import { LitElement, html } from '../../../vendor/lit-element/lit-element.js'
+import * as toast from '../toast.js'
+import { writeToClipboard } from '../../lib/clipboard.js'
+import { joinPath } from '../../lib/strings.js'
 
 export class ContextualHelp extends LitElement {
   static get properties () {

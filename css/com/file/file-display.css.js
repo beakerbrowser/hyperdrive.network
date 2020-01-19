@@ -1,5 +1,5 @@
-import {css} from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import typographyCSS from 'beaker://app-stdlib/css/typography.css.js'
+import {css} from '../../../vendor/lit-element/lit-element.js'
+import typographyCSS from '../../typography.css.js'
 
 const cssStr = css`
 ${typographyCSS}

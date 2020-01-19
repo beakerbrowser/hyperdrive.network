@@ -1,9 +1,9 @@
-import {css} from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import buttonsCSS from 'beaker://app-stdlib/css/buttons2.css.js'
-import inputsCSS from 'beaker://app-stdlib/css/inputs.css.js'
-import tooltipCSS from 'beaker://app-stdlib/css/tooltip.css.js'
-import famodCSS from 'beaker://app-stdlib/css/fa-mod.css.js'
-import spinnerCSS from 'beaker://app-stdlib/css/com/spinner.css.js'
+import {css} from '../vendor/lit-element/lit-element.js'
+import buttonsCSS from './buttons2.css.js'
+import inputsCSS from './inputs.css.js'
+import tooltipCSS from './tooltip.css.js'
+import famodCSS from './fa-mod.css.js'
+import spinnerCSS from './com/spinner.css.js'
 
 const cssStr = css`
 ${buttonsCSS}

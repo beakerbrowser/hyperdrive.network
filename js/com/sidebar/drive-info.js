@@ -1,7 +1,5 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import { until } from 'beaker://app-stdlib/vendor/lit-element/lit-html/directives/until.js'
-import bytes from 'beaker://app-stdlib/vendor/bytes/index.js'
-import 'beaker://app-stdlib/js/com/hover-menu.js'
+import { LitElement, html } from '../../../vendor/lit-element/lit-element.js'
+import bytes from '../../../vendor/bytes/index.js'
 
 export class DriveInfo extends LitElement {
   static get properties () {

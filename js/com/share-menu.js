@@ -1,7 +1,7 @@
-import { html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import * as contextMenu from 'beaker://app-stdlib/js/com/context-menu.js'
-import * as toast from 'beaker://app-stdlib/js/com/toast.js'
-import { writeToClipboard } from 'beaker://app-stdlib/js/clipboard.js'
+import { html } from '../../vendor/lit-element/lit-element.js'
+import * as contextMenu from './context-menu.js'
+import * as toast from './toast.js'
+import { writeToClipboard } from '../lib/clipboard.js'
 
 export function create ({x, y, targetLabel, url}) {
   function onClickCopy (e) {
@@ -13,7 +13,7 @@ export function create ({x, y, targetLabel, url}) {
     y,
     render () {
       return html`
-        <link rel="stylesheet" href="beaker://assets/font-awesome.css">
+        <link rel="stylesheet" href="/css/font-awesome.css">
         <div class="share-menu">
           <p>Anybody with this link can view the ${targetLabel}</p>
           <p>

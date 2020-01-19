@@ -1,4 +1,4 @@
-import { joinPath } from 'beaker://app-stdlib/js/strings.js'
+import { joinPath } from './strings.js'
 
 const ICONS = {
   root: {

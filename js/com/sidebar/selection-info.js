@@ -1,7 +1,5 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import bytes from 'beaker://app-stdlib/vendor/bytes/index.js'
-import { joinPath, toNiceUrl } from 'beaker://app-stdlib/js/strings.js'
-import { emit } from 'beaker://app-stdlib/js/dom.js'
+import { LitElement, html } from '../../../vendor/lit-element/lit-element.js'
+import bytes from '../../../vendor/bytes/index.js'
 import '../file/file-display.js'
 
 export class SelectionInfo extends LitElement {
@@ -42,7 +40,7 @@ export class SelectionInfo extends LitElement {
     }
     var sel = this.selection[0]
     return html`
-      <link rel="stylesheet" href="beaker://assets/font-awesome.css">
+      <link rel="stylesheet" href="/css/font-awesome.css">
       <section>
         <h3>${sel.path}</h3>
         ${this.renderSize()}

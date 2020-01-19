@@ -1,8 +1,8 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import { repeat } from 'beaker://app-stdlib/vendor/lit-element/lit-html/directives/repeat.js'
-import { findParent, emit } from 'beaker://app-stdlib/js/dom.js'
+import { LitElement, html } from '../../../vendor/lit-element/lit-element.js'
+import { repeat } from '../../../vendor/lit-element/lit-html/directives/repeat.js'
+import { findParent, emit } from '../../lib/dom.js'
 import { handleDragDrop } from '../../lib/drag-drop.js'
-import * as contextMenu from 'beaker://app-stdlib/js/com/context-menu.js'
+import * as contextMenu from '../context-menu.js'
 import * as loc from '../../lib/location.js'
 import mainCSS from '../../../css/com/folder/file-grid.css.js'
 
@@ -84,7 +84,7 @@ export class BaseFilesView extends LitElement {
   render () {
     var isEmpty = this.itemGroups.reduce((acc, group) => acc && group.length === 0, true)
     return html`
-      <link rel="stylesheet" href="beaker://assets/font-awesome.css">
+      <link rel="stylesheet" href="/css/font-awesome.css">
       <div
         class="container"
         @click=${this.onClickContainer}

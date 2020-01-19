@@ -1,5 +1,5 @@
-import { html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import * as contextMenu from 'beaker://app-stdlib/js/com/context-menu.js'
+import { html } from '../../vendor/lit-element/lit-element.js'
+import * as contextMenu from './context-menu.js'
 import * as loc from '../lib/location.js'
 
 export function create (app, {x, y}) {
@@ -35,7 +35,7 @@ export function create (app, {x, y}) {
         <option ?selected=${id === app.sortMode} value=${id}>⇅ Sort by ${label}</option>
       `
       return html`
-        <link rel="stylesheet" href="beaker://assets/font-awesome.css">
+        <link rel="stylesheet" href="/css/font-awesome.css">
         <div class="settings-menu">
           ${renderModes.length ? html`
             <h5>View mode</h5>

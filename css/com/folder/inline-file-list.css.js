@@ -1,5 +1,5 @@
-import {css} from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
-import tooltipCSS from 'beaker://app-stdlib/css/tooltip.css.js'
+import {css} from '../../../vendor/lit-element/lit-element.js'
+import tooltipCSS from '../../tooltip.css.js'
 
 const cssStr = css`
 ${tooltipCSS}

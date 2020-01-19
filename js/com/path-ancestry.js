@@ -1,4 +1,4 @@
-import { LitElement, html } from 'beaker://app-stdlib/vendor/lit-element/lit-element.js'
+import { LitElement, html } from '../../vendor/lit-element/lit-element.js'
 import { handleDragDrop } from '../lib/drag-drop.js'
 
 export class PathAncestry extends LitElement {
