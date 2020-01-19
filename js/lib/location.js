@@ -2,6 +2,8 @@ var url = location.pathname.slice(1) // slice past the '/'
 if (url && url.startsWith('hd://')) {
   // remove the 'hd://'
   history.replaceState(undefined, document.title, window.location.origin + '/' + url.slice('hd://'.length))
+} else if (!url && navigator.filesystem) {
+  window.location = `/${navigator.filesystem.url.slice('hd://'.length)}`
 } else {
   url = 'hd://' + url
 }
