@@ -14220,10 +14220,10 @@ file-display {
       var height = max('y') - top;
       var width = max('x') - left;
 
-      dragSelector.el.style.left = left;
-      dragSelector.el.style.width = width;
-      dragSelector.el.style.top = top;
-      dragSelector.el.style.height = height;
+      dragSelector.el.style.left = String(left) + 'px';
+      dragSelector.el.style.width = String(width) + 'px';
+      dragSelector.el.style.top = String(top) + 'px';
+      dragSelector.el.style.height = String(height) + 'px';
     }
 
     function findElsInSelector (dragSelector, candidateEls) {
