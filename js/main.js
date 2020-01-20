@@ -748,7 +748,7 @@ export class ExplorerApp extends LitElement {
     try {
       await drive.mount(joinPath(this.realPathname, name), target.url)
     } catch (e) {
-      toast.error(e.toString())
+      toast.create(e.toString(), 'error')
       console.error(e)
     }
     this.load()
@@ -806,7 +806,7 @@ export class ExplorerApp extends LitElement {
       }
       if (!this.selection[0]) {
         // redirect to new location
-        loc.getPath() = loc.getPath().split('/').slice(0, -1).concat([newName]).join('/')
+        loc.setPath(loc.getPath().split('/').slice(0, -1).concat([newName]).join('/'))
       }
     }
   }
@@ -845,7 +845,7 @@ export class ExplorerApp extends LitElement {
         await del(this.realPathname, this.pathInfo)
         toast.create(`Deleted 1 item`, 'success')
 
-        loc.getPath() = loc.getPath().split('/').slice(0, -1).join('/')
+        loc.setPath(loc.getPath().split('/').slice(0, -1).join('/'))
       }
     } catch (e) {
       console.error(e)

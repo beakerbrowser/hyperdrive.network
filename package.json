@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "rollup js/main.js --format iife --name main --file js/main.build.js"
+  },
+  "devDependencies": {
+    "rollup": "^1.29.0"
+  }
+}

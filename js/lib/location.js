@@ -22,6 +22,11 @@ export function setUrl (url) {
   window.location = `/${url.replace(/^hd:\/\//, '')}`
 }
 
+export function setPath (path) {
+  urlp.pathname = path
+  setUrl(urlp.toString())
+}
+
 export function openUrl (url) {
   window.open(`${window.location.origin}/${url.replace(/^hd:\/\//, '')}`)
 }
