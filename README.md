@@ -1,4 +1,4 @@
-# Beaker Files Explorer
+# Hyperdrive.Network
 
 An application for viewing and modifying Hyperdrives. Requires a Hyperdrive-enabled browser.
 
