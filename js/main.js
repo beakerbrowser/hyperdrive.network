@@ -1,5 +1,7 @@
 import { LitElement, html } from '../vendor/lit-element/lit-element.js'
 import { classMap } from '../vendor/lit-element/lit-html/directives/class-map.js'
+import { repeat } from '../vendor/lit-element/lit-html/directives/repeat.js'
+import { until } from '../vendor/lit-element/lit-html/directives/until.js'
 import { joinPath, pluralize, changeURLScheme } from './lib/strings.js'
 import { timeDifference } from './lib/time.js'
 import * as toast from './com/toast.js'
@@ -59,6 +61,7 @@ export class ExplorerApp extends LitElement {
     this.mountTitle = undefined
     
     // UI state
+    this.showHome = false
     this.loadingState = LOADING_STATES.INITIAL
     this.errorState = undefined
     this.selection = []
@@ -146,6 +149,12 @@ export class ExplorerApp extends LitElement {
   }
 
   async load () {
+    if (typeof Hyperdrive === 'undefined' || !loc.getUrl()) {
+      this.showHome = true
+      this.requestUpdate()
+      return
+    }
+
     if (!this.user) {
       let userStat = await navigator.filesystem.stat('/profile')
       this.user = {url: `hd://${userStat.mount.key}`}
@@ -201,7 +210,6 @@ export class ExplorerApp extends LitElement {
     // update loading state
     this.loadingState = LOADING_STATES.CONTENT
     this.requestUpdate()
-    // return
 
     // read location content
     try {
@@ -388,6 +396,10 @@ export class ExplorerApp extends LitElement {
   // =
 
   render () {
+    if (this.showHome) {
+      return this.renderHome()
+    }
+
     return html`
       <link rel="stylesheet" href="/css/font-awesome.css">
       <div
@@ -426,6 +438,29 @@ export class ExplorerApp extends LitElement {
             </main>
             ${this.renderRightNav()}
           `}
+      </div>
+    `
+  }
+
+  renderHome () {
+    return html`
+      <link rel="stylesheet" href="/css/font-awesome.css">
+      <div class="home">
+        <section>
+          <h1>Hyperdrive.Network</h1>
+          <p>Hyperdrive is a peer-to-peer file network built for the Web, personal computing, and cloud computing.</p>
+        </section>
+        ${typeof Hyperdrive === 'undefined' ? html`
+          <aside>
+            <h3>Your browser does not support Hyperdrive.</h3>
+            <p>Your browser needs to support Hyperdrive to use this site. Try <a href="https://beakerbrowser.com">Beaker Browser</a>!</p>
+            <p><button class="primary" @click=${e => {window.location = 'https://beakerbrowser.com/'}}><span class="fas fa-fw fa-download"></span> Download Beaker</button></p>
+          </aside>
+        ` : html`
+          <aside>
+            <button class="primary" @click=${this.onSelectDrive}><span class="fas fa-fw fa-hdd"></span> Open a drive</button>
+          </aside>
+        `}
       </div>
     `
   }
@@ -880,6 +915,12 @@ export class ExplorerApp extends LitElement {
       select: ['folder']
     })
     window.open(`beaker://compare/?base=${base}&target=${target[0].url}`)
+  }
+
+  async onSelectDrive (e) {
+    e.preventDefault()
+    var drive = await navigator.selectDriveDialog()
+    loc.setUrl(drive)
   }
 }
 

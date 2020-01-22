@@ -335,6 +335,50 @@ nav .help input {
   text-overflow: ellipsis;
 }
 
+.home {
+  max-width: 600px;
+  margin: 10px auto;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.home h1 {
+  font-size: 32px;
+}
+
+.home h3 {
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.home p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.home a {
+  color: #2864dc;
+}
+
+.home section {
+  border: 1px solid #ccd;
+  border-radius: 4px;
+  padding: 50px 20px 60px;
+}
+
+.home aside {
+  background: #f5f5fa;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.home aside button {
+  display: block;
+  margin: 0 auto;
+  font-size: 21px;
+}
+
 .header {
   position: sticky;
   z-index: 2;
