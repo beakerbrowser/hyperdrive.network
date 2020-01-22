@@ -214,12 +214,6 @@ export class ExplorerApp extends LitElement {
       console.log(e)
     }
 
-    if (location.hash === '#edit') {
-      navigator.executeSidebarCommand('show-panel', 'editor-app')
-      navigator.executeSidebarCommand('set-context', 'editor-app', loc.getUrl())
-      history.replaceState(undefined, document.title, window.location.origin + '/' + loc.getUrl().split('#')[0])
-    }
-
     console.log({
       driveInfo: this.driveInfo,
       mountInfo: this.mountInfo,
@@ -417,7 +411,6 @@ export class ExplorerApp extends LitElement {
         @export=${this.onExport}
         @rename=${this.onRename}
         @delete=${this.onDelete}
-        @toggle-editor=${this.onToggleEditor}
       >
         <div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>
         ${this.loadingState === LOADING_STATES.INITIAL
@@ -719,7 +712,9 @@ export class ExplorerApp extends LitElement {
         toast.create(`Error: ${e.toString()}`, 'error')
         return
       }
-      loc.setUrl(joinPath(loc.getUrl(), filename + '#edit'))
+      var url = joinPath(loc.getUrl(), filename)
+      await navigator.executeSidebarCommand('show-panel', 'editor-app')
+      await navigator.executeSidebarCommand('set-context', 'editor-app', url)
     }
   }
 
@@ -851,11 +846,6 @@ export class ExplorerApp extends LitElement {
       console.error(e)
       toast.create(`Deletion failed: ${e.toString()}`, 'error')
     }
-  }
-
-  onToggleEditor (e) {
-    navigator.executeSidebarCommand('show-panel', 'editor-app')
-    navigator.executeSidebarCommand('set-context', 'editor-app', loc.getUrl())
   }
 
   onShowMenu (e) {

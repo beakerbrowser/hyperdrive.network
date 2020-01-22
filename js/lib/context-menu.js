@@ -49,13 +49,15 @@ export function constructItems (app) {
           icon: 'fas fa-fw fa-edit',
           label: 'Edit',
           disabled: !writable || !sel.stat.isFile(),
-          click: () => {
+          click: async () => {
+            let url
             if (app.selection[0]) {
-              loc.setUrl(joinPath(loc.getOrigin(), sel.path) + '#edit')
+              url = joinPath(loc.getOrigin(), sel.path)
             } else {
-              window.location.hash = 'edit'
-              window.location.reload()
+              url = loc.getUrl()
             }
+            await navigator.executeSidebarCommand('show-panel', 'editor-app')
+            await navigator.executeSidebarCommand('set-context', 'editor-app', url)
           }
         })
       }
