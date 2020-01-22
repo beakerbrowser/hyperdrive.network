@@ -443,6 +443,7 @@ export class ExplorerApp extends LitElement {
   }
 
   renderHome () {
+    document.title = 'Hyperdrive.Network'
     return html`
       <link rel="stylesheet" href="/css/font-awesome.css">
       <div class="home">
