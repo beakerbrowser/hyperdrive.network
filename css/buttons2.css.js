@@ -45,7 +45,7 @@ button.pressed {
 
 button.primary {
   background: #5289f7;
-  border-color: var(--blue);
+  border-color: #2864dc;
   color: #fff;
   box-shadow: 0 1px 1px rgba(0,0,0,.1);
 }
