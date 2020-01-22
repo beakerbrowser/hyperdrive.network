@@ -6,10 +6,10 @@ An application for viewing and modifying Hyperdrives. Requires a Hyperdrive-enab
 
 Run `npm install` to install dev deps.
 
-To avoid having to run the build step, set the index.html script to `js/main.js`. (Don't forget to restore this before committing.)
+Run `npm run dev` to start a local http server against the development code.
 
-Serve the site statically (eg using `npx serve -s`). Edit your `/etc/hosts` to include a `dev.hyperdrive.network` which points to localhost. (The address is required for Beaker to provide the correct permissions to the application.)
+Edit your `/etc/hosts` to include a `dev.hyperdrive.network` which points to localhost. (The address is required for Beaker to provide the correct permissions to the application.)
 
 ## Building
 
-Run `npm run build` to produce `js/main.build.js`.
+Run `npm run build` to produce `./build`. You can serve the build using `npm run prod`.
