@@ -1,5 +1,6 @@
 #! /bin/sh
 
+rm -Rf ./build
 mkdir ./build
 cp index.* ./build/
 cp -R ./js ./build/js
