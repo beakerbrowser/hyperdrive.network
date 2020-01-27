@@ -125,7 +125,7 @@ export class BaseFilesView extends LitElement {
     contextMenu.destroy()
 
     var selection
-    if (e.metaKey) {
+    if (e.metaKey || e.ctrlKey) {
       let i = this.selection.indexOf(item)
       if (i === -1) {
         selection = this.selection.concat([item])
