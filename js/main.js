@@ -418,7 +418,6 @@ export class ExplorerApp extends LitElement {
         @goto=${this.onGoto}
         @change-selection=${this.onChangeSelection}
         @show-context-menu=${this.onShowMenu}
-        @new-drive=${this.onNewDrive}
         @new-folder=${this.onNewFolder}
         @new-file=${this.onNewFile}
         @new-mount=${this.onNewMount}
@@ -502,11 +501,17 @@ export class ExplorerApp extends LitElement {
           <span class="date">${timeDifference(this.pathInfo.mtime, true, 'ago')}</span>
         ` : ''}
         <span class="spacer"></span>
+        <button class="transparent" @click=${this.onClickNewDrive}>
+          <span class="fas fa-plus"></span> New Drive
+        </button>
         <button class="transparent" @click=${this.onClickSettings}>
           <span class="fas fa-cog"></span> Settings
         </button>
         <button class="primary labeled-btn" @click=${this.onClickActions}>
-          Actions${this.selection.length ? ` (${this.selection.length} ${pluralize(this.selection.length, 'item')})` : ''}
+          ${this.selection.length ?
+            `${this.selection.length} ${pluralize(this.selection.length, 'item')} selected`
+            : this.pathInfo.isDirectory() ? 'Folder' : 'File'
+          }
           <span class="fas fa-fw fa-caret-down"></span>
         </button>
       </div>
@@ -740,10 +745,49 @@ export class ExplorerApp extends LitElement {
     el.classList.remove('active')
   }
 
-  async onNewDrive (e) {
-    var drive = await Hyperdrive.create()
-    toast.create('Drive created')
-    loc.openUrl(drive.url)
+  async onClickNewDrive (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    let el = e.currentTarget
+    let rect = el.getClientRects()[0]
+    el.classList.add('active')
+    const onCreateDrive = (type) => async () => {
+      var drive = await Hyperdrive.create({type})
+      toast.create('Drive created')
+      loc.openUrl(drive.url)
+    }
+    await contextMenu.create({
+      x: (rect.left + rect.right) / 2,
+      y: rect.bottom,
+      center: true,
+      roomy: false,
+      noBorders: true,
+      fontAwesomeCSSUrl: '/css/font-awesome.css',
+      style: `padding: 4px 0`,
+      items: [
+        {
+          icon: 'far fa-hdd',
+          label: 'Files Drive',
+          click: onCreateDrive(),
+        },
+        {
+          icon: 'fas fa-desktop',
+          label: 'Website',
+          click: onCreateDrive('website'),
+        },
+        {
+          icon: 'fas fa-cube',
+          label: 'Module',
+          click: onCreateDrive('module'),
+        },
+        {
+          icon: 'fas fa-drafting-compass',
+          label: 'Theme',
+          click: onCreateDrive('theme'),
+        }
+      ]
+    })
+    el.classList.remove('active')
   }
 
   async onNewFile (e) {
