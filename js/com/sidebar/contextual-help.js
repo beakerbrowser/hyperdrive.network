@@ -65,9 +65,6 @@ export class ContextualHelp extends LitElement {
   }
 
   renderUrlCtrl () {
-    if (this.targetDrive.url === navigator.filesystem.url) {
-      return ''
-    }
     return html`
       <tr>
         <td class="tooltip-right" data-tooltip="Click here to copy the URL" @click=${this.onClickCopyUrl} style="cursor: pointer">

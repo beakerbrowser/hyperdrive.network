@@ -47,22 +47,14 @@ export class DriveInfo extends LitElement {
           ${this.renderType()}
           ${this.renderSize()}
         </p>
-        ${this.driveInfo.type === 'unwalled.garden/person' ? html`
-          ${this.driveInfo.url !== this.userUrl ? '' : html`
-            <div class="bottom-ctrls">
-              <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My profile</span>
-              <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
-            </div>
-          `}
-        ` : this.driveInfo.url === navigator.filesystem.url ? html`
-          <div class="bottom-ctrls">
+        <div class="bottom-ctrls">
+          <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
+          ${this.driveInfo.url === this.userUrl ? html`
+            <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My profile</span>
+          ` : this.driveInfo.url === navigator.filesystem.url ? html`
             <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My home drive</span>
-          </div>
-        ` : html`
-          <div class="bottom-ctrls">
-            <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
-          </div>
-        `}
+          ` : ''}
+        </div>
       </section>
     `
   }
