@@ -222,6 +222,11 @@ export class ExplorerApp extends LitElement {
       console.log(e)
     }
 
+    // update selection if needed
+    if (this.selection && this.selection.length) {
+      this.selection = this.selection.map(item => this.items.find(item2 => item2.path === item.path)).filter(Boolean)
+    }
+
     console.log({
       driveInfo: this.driveInfo,
       mountInfo: this.mountInfo,
@@ -423,6 +428,7 @@ export class ExplorerApp extends LitElement {
         @export=${this.onExport}
         @rename=${this.onRename}
         @delete=${this.onDelete}
+        @update-file-metadata=${this.onUpdateFileMetadata}
       >
         <div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>
         ${this.loadingState === LOADING_STATES.INITIAL
@@ -587,7 +593,16 @@ export class ExplorerApp extends LitElement {
             .pathInfo=${this.pathInfo}
             .viewfileObj=${this.viewfileObj}
           ></viewfile-info>
-        ` : html``}
+        ` : html`
+          <selection-info
+            user-url=${this.user.url}
+            .driveInfo=${this.driveInfo}
+            .pathInfo=${this.pathInfo}
+            .mountInfo=${this.mountInfo}
+            .selection=${[this.locationAsItem]}
+            no-preview
+          ></selection-info>
+        `}
         <contextual-help
           user-url=${this.user.url}
           real-pathname=${this.realPathname}
@@ -881,6 +896,31 @@ export class ExplorerApp extends LitElement {
     } catch (e) {
       console.error(e)
       toast.create(`Deletion failed: ${e.toString()}`, 'error')
+    }
+  }
+
+  async onUpdateFileMetadata (e) {
+    if (!this.currentDriveInfo.writable) return
+    var {newMetadata, deletedKeys} = e.detail
+    var drive = new Hyperdrive(this.currentDriveInfo.url)
+    try {
+      if (this.selection.length) {
+        for (let sel of this.selection) {
+          await drive.updateMetadata(sel.realPath, newMetadata)
+          if (deletedKeys.length) {
+            await drive.deleteMetadata(sel.realPath, deletedKeys)
+          }
+        }
+      } else {
+        await drive.updateMetadata(this.realPathname, newMetadata)
+        if (deletedKeys.length) {
+          await drive.deleteMetadata(this.realPathname, deletedKeys)
+        }
+      }
+      toast.create('File updated', 'success')
+    } catch (e) {
+      console.error(e)
+      toast.create(`File update failed: ${e.toString()}`, 'error')
     }
   }
 

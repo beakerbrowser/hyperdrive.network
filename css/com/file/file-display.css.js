@@ -82,6 +82,19 @@ audio {
   box-sizing: border-box;
 }
 
+:host > img,
+:host > video,
+:host > audio {
+  display: block;
+  margin: 0 auto;
+}
+
+:host([horz]) > img,
+:host([horz]) > video,
+:host([horz]) > audio {
+  margin: 0;
+}
+
 :host > img {
   border-radius: var(--img-border-radius);
 }

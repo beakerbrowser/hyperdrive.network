@@ -335,6 +335,41 @@ nav .help input {
   text-overflow: ellipsis;
 }
 
+nav .metadata {
+  width: 100%;
+  margin: 10px 0 0;
+  border-bottom: 1px solid #ccd;
+}
+
+nav .metadata .entry {
+  display: flex;
+  border: 1px solid #ccd;
+  border-bottom: 0;
+}
+
+nav .metadata input {
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+}
+
+nav .metadata input[name="key"] {
+  border-right: 1px solid #ccd;
+  flex: 0 0 120px;
+}
+
+nav .metadata input[name="value"] {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+nav .metadata + button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  display: block;
+  width: 100%;
+}
+
 .home {
   max-width: 600px;
   margin: 10px auto;
