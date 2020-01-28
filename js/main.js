@@ -181,7 +181,7 @@ export class ExplorerApp extends LitElement {
 
     // view config
     if (this.pathInfo.isDirectory()) {
-      this.renderMode = getSavedConfig('render-mode', 'list')
+      this.renderMode = getSavedConfig('render-mode', 'grid')
       this.inlineMode = Boolean(getSavedConfig('inline-mode', false))
       this.sortMode = getSavedConfig('sort-mode', 'name')
       if (!this.watchStream) {
@@ -198,7 +198,7 @@ export class ExplorerApp extends LitElement {
         })
       }
     } else if (loc.getPath().endsWith('.view')) {
-      this.renderMode = getSavedConfig('render-mode', getVFCfg(this.viewfileObj, 'renderMode', ['grid', 'list']) || 'list')
+      this.renderMode = getSavedConfig('render-mode', getVFCfg(this.viewfileObj, 'renderMode', ['grid', 'list']) || 'grid')
       this.inlineMode = Boolean(getSavedConfig('inline-mode', getVFCfg(this.viewfileObj, 'inline', [true, false]) || false))
       this.sortMode = getSavedConfig('sort-mode', 'name') // TODO
     } else {
