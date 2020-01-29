@@ -1,9 +1,9 @@
 var url = location.pathname.slice(1) // slice past the '/'
-if (url && url.startsWith('hd://')) {
-  // remove the 'hd://'
-  history.replaceState(undefined, document.title, window.location.origin + '/' + url.slice('hd://'.length))
+if (url && url.startsWith('hyper://')) {
+  // remove the 'hyper://'
+  history.replaceState(undefined, document.title, window.location.origin + '/' + url.slice('hyper://'.length))
 } else if (url) {
-  url = 'hd://' + url
+  url = 'hyper://' + url
 }
 var urlp
 try {
@@ -17,7 +17,7 @@ export function getUrl () {
 }
 
 export function setUrl (url) {
-  window.location = `/${url.replace(/^hd:\/\//, '')}`
+  window.location = `/${url.replace(/^hyper:\/\//, '')}`
 }
 
 export function setPath (path) {
@@ -26,7 +26,7 @@ export function setPath (path) {
 }
 
 export function openUrl (url) {
-  window.open(`${window.location.origin}/${url.replace(/^hd:\/\//, '')}`)
+  window.open(`${window.location.origin}/${url.replace(/^hyper:\/\//, '')}`)
 }
 
 export function getOrigin () {

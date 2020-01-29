@@ -157,7 +157,7 @@ export class ExplorerApp extends LitElement {
 
     if (!this.user) {
       let userStat = await navigator.filesystem.stat('/profile')
-      this.user = {url: `hd://${userStat.mount.key}`}
+      this.user = {url: `hyper://${userStat.mount.key}`}
     }
 
     // read location information
@@ -346,7 +346,7 @@ export class ExplorerApp extends LitElement {
 
   getShareUrl (item) {
     if (item.stat.mount) {
-      return `hd://${item.stat.mount.key}`
+      return `hyper://${item.stat.mount.key}`
     } else if (item.name.endsWith('.goto') && item.stat.metadata.href) {
       return item.stat.metadata.href
     } else {
@@ -668,7 +668,7 @@ export class ExplorerApp extends LitElement {
     return false
   }
 
-  goto (item, newWindow = false, useHdScheme = false) {
+  goto (item, newWindow = false, useHyperScheme = false) {
     var url
     if (typeof item === 'string') {
       url = item
@@ -677,7 +677,7 @@ export class ExplorerApp extends LitElement {
     } else {
       url = joinPath(loc.getOrigin(), item.path)
     }
-    if (useHdScheme) {
+    if (useHyperScheme) {
       if (newWindow) window.open(url)
       else window.location = url
     } else {
