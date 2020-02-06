@@ -6,7 +6,6 @@ import { joinPath } from '../../lib/strings.js'
 export class ContextualHelp extends LitElement {
   static get properties () {
     return {
-      userUrl: {type: String, attribute: 'user-url'},
       realPathname: {type: String, attribute: 'real-pathname'},
       driveInfo: {type: Object},
       mountInfo: {type: Object},
@@ -17,7 +16,6 @@ export class ContextualHelp extends LitElement {
 
   constructor () {
     super()
-    this.userUrl = undefined
     this.realPathname = undefined
     this.driveInfo = undefined
     this.mountInfo = undefined

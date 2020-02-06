@@ -6,7 +6,6 @@ import '../com/file/file-display.js'
 export class FileView extends LitElement {
   static get properties () {
     return {
-      userUrl: {type: String, attribute: 'user-url'},
       currentDriveInfo: {type: Object},
       currentDriveTitle: {type: String, attribute: 'current-drive-title'},
       pathInfo: {type: Object},
@@ -22,7 +21,6 @@ export class FileView extends LitElement {
 
   constructor () {
     super()
-    this.userUrl = undefined
     this.currentDriveInfo = undefined
     this.currentDriveTitle = undefined
     this.pathInfo = undefined

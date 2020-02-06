@@ -9,7 +9,6 @@ import '../com/file/file-display.js'
 export class FolderView extends LitElement {
   static get properties () {
     return {
-      userUrl: {type: String, attribute: 'user-url'},
       currentDriveInfo: {type: Object},
       currentDriveTitle: {type: String, attribute: 'current-drive-title'},
       items: {type: Array},
@@ -28,7 +27,6 @@ export class FolderView extends LitElement {
 
   constructor () {
     super()
-    this.userUrl = undefined
     this.currentDriveInfo = undefined
     this.currentDriveTitle = undefined
     this.items = undefined
@@ -53,7 +51,6 @@ export class FolderView extends LitElement {
     // if (this.renderMode === 'feed') {
     //   return html`
     //     <file-feed
-    //       user-url=${this.userUrl}
     //       real-url=${this.realUrl}
     //       real-pathname=${this.realPathname}
     //       current-drive-title=${this.currentDriveTitle}

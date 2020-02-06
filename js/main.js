@@ -50,7 +50,6 @@ export class ExplorerApp extends LitElement {
     super()
 
     // location information
-    this.user = undefined
     this.driveInfo = undefined
     this.pathInfo = undefined
     this.mountInfo = undefined
@@ -153,11 +152,6 @@ export class ExplorerApp extends LitElement {
       this.showHome = true
       this.requestUpdate()
       return
-    }
-
-    if (!this.user) {
-      let userStat = await navigator.filesystem.stat('/profile')
-      this.user = {url: `hyper://${userStat.mount.key}`}
     }
 
     // read location information
@@ -528,7 +522,6 @@ export class ExplorerApp extends LitElement {
     if (isViewfile) {
       return html`
         <explorer-view-query
-          user-url=${this.user.url}
           real-url=${this.realUrl}
           real-pathname=${this.realPathname}
           current-drive-title=${this.currentDriveTitle}
@@ -545,7 +538,6 @@ export class ExplorerApp extends LitElement {
     if (this.pathInfo.isDirectory()) {
       return html`
         <explorer-view-folder
-          user-url=${this.user.url}
           real-url=${this.realUrl}
           real-pathname=${this.realPathname}
           current-drive-title=${this.currentDriveTitle}
@@ -560,7 +552,6 @@ export class ExplorerApp extends LitElement {
     }
     return html`
       <explorer-view-file
-        user-url=${this.user.url}
         real-url=${this.realUrl}
         real-pathname=${this.realPathname}
         current-drive-title=${this.currentDriveTitle}
@@ -579,13 +570,11 @@ export class ExplorerApp extends LitElement {
     return html`
       <nav class="right">
         <drive-info
-          user-url=${this.user.url}
           real-url=${this.realUrl}
           .driveInfo=${this.currentDriveInfo}
         ></drive-info>
         ${this.selection.length > 0 ? html`
           <selection-info
-            user-url=${this.user.url}
             .driveInfo=${this.driveInfo}
             .pathInfo=${this.pathInfo}
             .mountInfo=${this.mountInfo}
@@ -600,7 +589,6 @@ export class ExplorerApp extends LitElement {
           ></viewfile-info>
         ` : html`
           <selection-info
-            user-url=${this.user.url}
             .driveInfo=${this.driveInfo}
             .pathInfo=${this.pathInfo}
             .mountInfo=${this.mountInfo}
@@ -609,7 +597,6 @@ export class ExplorerApp extends LitElement {
           ></selection-info>
         `}
         <contextual-help
-          user-url=${this.user.url}
           real-pathname=${this.realPathname}
           .driveInfo=${this.driveInfo}
           .pathInfo=${this.pathInfo}

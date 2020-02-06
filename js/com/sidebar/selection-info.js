@@ -12,7 +12,6 @@ export class SelectionInfo extends LitElement {
       mountInfo: {type: Object},
       selection: {type: Array},
       noPreview: {type: Boolean, attribute: 'no-preview'},
-      userUrl: {type: String, attribute: 'user-url'},
       metadataHasChanged: {type: Boolean}
     }
   }
@@ -25,7 +24,6 @@ export class SelectionInfo extends LitElement {
     this.mountInfo = undefined
     this.selection = []
     this.noPreview = undefined
-    this.userUrl = undefined
     this.metadataHasChanged = false
   }
 
@@ -49,7 +47,7 @@ export class SelectionInfo extends LitElement {
         <h3>${sel.path}</h3>
         ${this.renderSize()}
         ${sel.mount ? html`
-          <drive-info .driveInfo=${sel.mount} user-url=${this.userUrl}></drive-info>
+          <drive-info .driveInfo=${sel.mount}></drive-info>
         ` : ''}
         ${!this.noPreview && sel.stat.isFile() ? html`
           <section style="border-radius: 0">

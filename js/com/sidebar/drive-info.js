@@ -4,7 +4,6 @@ import bytes from '../../../vendor/bytes/index.js'
 export class DriveInfo extends LitElement {
   static get properties () {
     return {
-      userUrl: {type: String, attribute: 'user-url'},
       realUrl: {type: String, attribute: 'real-url'},
       driveInfo: {type: Object},
       hasThumb: {type: Boolean}
@@ -13,7 +12,6 @@ export class DriveInfo extends LitElement {
 
   constructor () {
     super()
-    this.userUrl = undefined
     this.realUrl = undefined
     this.driveInfo = undefined
     this.hasThumb = true
@@ -49,9 +47,7 @@ export class DriveInfo extends LitElement {
         </p>
         <div class="bottom-ctrls">
           <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
-          ${this.driveInfo.url === this.userUrl ? html`
-            <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My profile</span>
-          ` : this.driveInfo.url === navigator.filesystem.url ? html`
+          ${this.driveInfo.url === navigator.filesystem.url ? html`
             <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My home drive</span>
           ` : ''}
         </div>
