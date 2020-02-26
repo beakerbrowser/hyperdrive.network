@@ -94,7 +94,7 @@ export function slugifyUrl (str = '') {
 const reservedChars = /[^a-z0-9\-._~!$&'()*+,;=:@\/\s]/g
 const endingDashes = /([-]+$)/g
 export function slugify (str = '') {
-  return str.replace(reservedChars, '-').replace(endingDashes, '')
+  return str.toLowerCase().replace(reservedChars, '-').replace(endingDashes, '')
 }
 
 export function normalizeUrl (str = '') {

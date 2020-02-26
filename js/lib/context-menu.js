@@ -78,7 +78,7 @@ export function constructItems (app) {
         items.push({
           icon: html`<i style="padding-left: 2px; font-size: 16px; box-sizing: border-box">◨</i>`,
           label: 'Diff / merge',
-          click: () => app.doCompare(sel.url)
+          click: () => app.doDiff(sel.url)
         })
       }
       items.push({
@@ -151,15 +151,15 @@ export function constructItems (app) {
     })
     items.push('-')
     items.push({
-      icon: 'far fa-fw fa-clone',
-      label: 'Clone this drive',
+      icon: 'fas fa-fw fa-code-branch',
+      label: 'Fork this drive',
       disabled: !app.canShare(app.locationAsItem),
-      click: () => app.onCloneDrive()
+      click: () => app.onForkDrive()
     })
     items.push({
       icon: html`<i style="padding-left: 2px; font-size: 16px; box-sizing: border-box">◨</i>`,
       label: 'Diff / merge',
-      click: () => app.doCompare(loc.getUrl())
+      click: () => app.doDiff(loc.getUrl())
     })
     items.push({
       icon: 'fas fa-fw fa-file-import',

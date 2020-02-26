@@ -47,9 +47,6 @@ export class DriveInfo extends LitElement {
         </p>
         <div class="bottom-ctrls">
           <a class="btn" href=${this.realUrl} target="_blank"><span class="fas fa-fw fa-desktop"></span> Open as Website</a>
-          ${this.driveInfo.url === navigator.filesystem.url ? html`
-            <span class="label verified"><span class="fas fa-fw fa-check-circle"></span> My home drive</span>
-          ` : ''}
         </div>
       </section>
     `

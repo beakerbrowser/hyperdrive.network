@@ -101,20 +101,11 @@ export class FileDisplay extends LitElement {
   }
 
   async renderAndRenderMount () {
-    var user = await navigator.filesystem.stat('/profile')
-    var label = undefined
-    if (this.info.mount.key === user.mount.key) {
-      label = 'My profile'
-    } else if (this.info.mount.url === navigator.filesystem.url) {
-      label = 'My home drive'
-    }
-
     return html`
       <link rel="stylesheet" href="/css/font-awesome.css">
       <div class="mount">
         <img src="asset:thumb:${this.info.mount.url}?cache_buster=${Date.now()}">
         <div class="info">
-          ${label ? html`<div class="label">${label}</div>` : ''}
           <div class="title">${this.info.mount.title || 'Untitled'}</div>
           <div class="description">${this.info.mount.description}</div>
         </div>

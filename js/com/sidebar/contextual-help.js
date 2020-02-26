@@ -76,9 +76,6 @@ export class ContextualHelp extends LitElement {
   }
 
   renderVisibilityHelp () {
-    if (this.targetDrive.url === navigator.filesystem.url) {
-      return html`<tr><td><span class="fas fa-lock"></span></td><td>Only you can see this ${this.targetItemLabel}.</td></tr>`
-    }
     return html`<tr><td><span class="fas fa-globe"></span></td><td>Anyone with the link can view this ${this.targetItemLabel}.</td></tr>`
   }
 

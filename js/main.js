@@ -1,7 +1,5 @@
 import { LitElement, html } from '../vendor/lit-element/lit-element.js'
 import { classMap } from '../vendor/lit-element/lit-html/directives/class-map.js'
-import { repeat } from '../vendor/lit-element/lit-html/directives/repeat.js'
-import { until } from '../vendor/lit-element/lit-html/directives/until.js'
 import { joinPath, pluralize, changeURLScheme } from './lib/strings.js'
 import { timeDifference } from './lib/time.js'
 import * as toast from './com/toast.js'
@@ -300,7 +298,7 @@ export class ExplorerApp extends LitElement {
 
     var items = await this.attempt(
       `Running .view query (${loc.getPath()})`,
-      () => navigator.filesystem.query(this.viewfileObj.query)
+      () => drive.query(this.viewfileObj.query)
     )
 
     // massage the items to fit same form as `readDirectory()`
@@ -643,12 +641,8 @@ export class ExplorerApp extends LitElement {
   }
 
   canShare (item) {
-    if (item.mount) {
-      return true
-    } else if (item.drive.url !== navigator.filesystem.url) {
-      return true
-    }
-    return false
+    // TODO check if public?
+    return true
   }
 
   goto (item, newWindow = false, useHyperScheme = false) {
@@ -780,7 +774,7 @@ export class ExplorerApp extends LitElement {
     var targetUrl = await navigator.selectDriveDialog({title: 'Select a drive'})
     var target = new Hyperdrive(targetUrl)
     var info = await target.getInfo()
-    var name = await getAvailableName(this.realPathname, info.title, drive)
+    var name = await getAvailableName(drive, this.realPathname, info.title)
     try {
       await drive.mount(joinPath(this.realPathname, name), target.url)
     } catch (e) {
