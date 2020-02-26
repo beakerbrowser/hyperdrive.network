@@ -268,10 +268,6 @@ export class ExplorerApp extends LitElement {
   }
 
   async readDirectory (drive) {
-    let driveKind = ''
-    if (this.currentDriveInfo.url === navigator.filesystem.url) driveKind = 'root'
-    if (this.currentDriveInfo.type === 'unwalled.garden/person') driveKind = 'person'
-
     var items = await this.attempt(
       `Reading directory (${loc.getPath()})`,
       () => drive.readdir(loc.getPath(), {includeStats: true})
@@ -290,7 +286,7 @@ export class ExplorerApp extends LitElement {
         )
       }
       item.shareUrl = this.getShareUrl(item)
-      this.setItemIcons(driveKind, item)
+      this.setItemIcons(item)
     }
     
     this.sortItems(items)
@@ -348,14 +344,14 @@ export class ExplorerApp extends LitElement {
     }
   }
 
-  setItemIcons (driveKind, item) {
+  setItemIcons (item) {
     item.icon = item.stat.isDirectory() ? 'folder' : 'file'
     if (item.stat.isFile() && item.name.endsWith('.view')) {
       item.icon = 'layer-group'
     } else if (item.stat.isFile() && item.name.endsWith('.goto')) {
       item.icon = 'external-link-alt'
     } else {
-      item.subicon = getSubicon(driveKind, item)
+      item.subicon = getSubicon(item)
     }
   }
 

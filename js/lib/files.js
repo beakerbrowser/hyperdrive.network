@@ -1,28 +1,5 @@
 import { joinPath } from './strings.js'
 
-const ICONS = {
-  root: {
-    '/desktop': 'fas fa-th',
-    '/library': 'fas fa-university',
-    '/library/bookmarks': 'fas fa-star',
-    '/library/documents': 'fas fa-file-word',
-    '/library/media': 'fas fa-photo-video',
-    '/library/projects': 'fas fa-coffee',
-    '/system': 'fas fa-cog',
-    '/system/drives': 'fas fa-hdd',
-    '/system/templates': 'fas fa-drafting-compass',
-    '/system/webterm': 'fas fa-terminal'
-  },
-  person: {
-    '/comments': 'fas fa-comment',
-    '/follows': 'fas fa-user-friends',
-    '/posts': 'fa fa-rss',
-    '/votes': 'fas fa-vote-yea'
-  },
-  common: {
-  }
-}
-
 export function toSimpleItemGroups (items) {
   var groups = {}
   const add = (id, label, item) => {
@@ -77,12 +54,8 @@ export function toSemanticItemGroups (items) {
   return groupsArr
 }
 
-export function getSubicon (driveKind, item) {
-  if (driveKind === 'root') {
-    return ICONS.root[item.realPath] || ICONS.common[item.realPath]
-  } else if (driveKind === 'person') {
-    return ICONS.person[item.realPath] || ICONS.common[item.realPath]
-  }
+export function getSubicon (item) {
+  // TODO any?
 }
 
 async function doCopyOrMove ({sourceItem, targetFolder}, op) {
