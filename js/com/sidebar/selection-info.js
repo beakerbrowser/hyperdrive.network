@@ -74,6 +74,7 @@ export class SelectionInfo extends LitElement {
     var isWritable = this.mountInfo ? this.mountInfo.writable : this.driveInfo.writable
     var entries = Object.entries(this.selection[0].stat.metadata)
     if (isWritable) entries = entries.concat([['', '']])
+    if (!isWritable && entries.length === 0) return
     return html`
       <div class="metadata">
         <h4>Metadata</h4>
