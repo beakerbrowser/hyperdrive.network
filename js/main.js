@@ -409,7 +409,7 @@ export class ExplorerApp extends LitElement {
         @new-folder=${this.onNewFolder}
         @new-file=${this.onNewFile}
         @new-mount=${this.onNewMount}
-        @clone-drive=${this.onCloneDrive}
+        @fork-drive=${this.onForkDrive}
         @drive-properties=${this.onDriveProperties}
         @import=${this.onImport}
         @export=${this.onExport}
@@ -784,8 +784,8 @@ export class ExplorerApp extends LitElement {
     this.load()
   }
 
-  async onCloneDrive (e) {
-    var drive = await Hyperdrive.clone(this.currentDriveInfo.url)
+  async onForkDrive (e) {
+    var drive = await Hyperdrive.fork(this.currentDriveInfo.url)
     toast.create('Drive created')
     loc.setUrl(drive.url)
   }
