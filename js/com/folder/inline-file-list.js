@@ -31,9 +31,7 @@ export class InlineFileList extends BaseFilesView {
       >
         <div class="info">
           <div>
-            <a class="name" href=${item.url}>
-              ${this.showOrigin ? item.realPath : item.name}
-            </a>
+            <span class="name">${this.showOrigin ? item.realPath : item.name}</span>
           </div>
           ${this.showOrigin ? html`
             <div>Drive: <a class="author" href=${item.drive.url}>${driveTitle}</a></div>
