@@ -735,46 +735,9 @@ export class ExplorerApp extends LitElement {
   async onClickNewDrive (e) {
     e.preventDefault()
     e.stopPropagation()
-    let el = e.currentTarget
-    let rect = el.getClientRects()[0]
-    el.classList.add('active')
-    const onCreateDrive = (type) => async () => {
-      var drive = await Hyperdrive.create({type})
-      toast.create('Drive created')
-      loc.openUrl(drive.url)
-    }
-    await contextMenu.create({
-      x: (rect.left + rect.right) / 2,
-      y: rect.bottom,
-      center: true,
-      roomy: false,
-      noBorders: true,
-      fontAwesomeCSSUrl: '/css/font-awesome.css',
-      style: `padding: 4px 0`,
-      items: [
-        {
-          icon: 'far fa-hdd',
-          label: 'Files Drive',
-          click: onCreateDrive(),
-        },
-        {
-          icon: 'fas fa-desktop',
-          label: 'Website',
-          click: onCreateDrive('website'),
-        },
-        {
-          icon: 'fas fa-cube',
-          label: 'Module',
-          click: onCreateDrive('module'),
-        },
-        {
-          icon: 'fas fa-drafting-compass',
-          label: 'Theme',
-          click: onCreateDrive('theme'),
-        }
-      ]
-    })
-    el.classList.remove('active')
+    var drive = await Hyperdrive.create()
+    toast.create('Drive created')
+    loc.openUrl(drive.url)
   }
 
   async onNewFile (e) {
