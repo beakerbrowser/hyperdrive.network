@@ -934,12 +934,8 @@ export class ExplorerApp extends LitElement {
     })
   }
 
-  async doCompare (base) {
-    var target = await navigator.selectFileDialog({
-      title: 'Select a folder to compare against',
-      select: ['folder']
-    })
-    window.open(`beaker://compare/?base=${base}&target=${target[0].url}`)
+  async doDiff (base) {
+    window.open(`beaker://diff/?base=${base}`)
   }
 
   async onSelectDrive (e) {
