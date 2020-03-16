@@ -116,7 +116,7 @@ export function constructItems (app) {
     })
     items.push({
       icon: 'fas fa-fw fa-long-arrow-alt-right custom-link-icon',
-      label: 'New link',
+      label: 'New mount',
       disabled: !writable,
       click: () => app.onNewMount()
     })
