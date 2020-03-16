@@ -105,7 +105,7 @@ export function doImport (targetFolder, fileOrFolder) {
       dirReader.readEntries(async (entries) => {
         try {
           var name = folderEntry.name
-          var targetPath = joinPath(targetFolderParsed.pathname, path, name)
+          var targetPath = joinPath(path, name)
           var targetSt = await (targetDrive.stat(targetPath).catch(e => undefined))
           if (targetSt) {
             if (!confirm(`${name} already exists in the target folder. Overwrite?`)) {
@@ -117,10 +117,9 @@ export function doImport (targetFolder, fileOrFolder) {
               await targetDrive.rmdir(targetPath, {recursive: true})
             }
           }
-          await targetDrive.mkdir(joinPath(path, name))
-
+          await targetDrive.mkdir(targetPath)
           for (let entry of entries) {
-            await handleFileOrFolder(entry, joinPath(path, name))
+            await handleFileOrFolder(entry, targetPath)
           }
           resolve()
         } catch (e) {
@@ -138,7 +137,7 @@ export function doImport (targetFolder, fileOrFolder) {
         reader.onloadend = async () => {
           try {
             var name = file.name
-            var targetPath = joinPath(targetFolderParsed.pathname, path, name)
+            var targetPath = joinPath(path, name)
             var targetSt = await (targetDrive.stat(targetPath).catch(e => undefined))
             if (targetSt) {
               if (targetSt.isFile() && !confirm(`${name} already exists in the target folder. Overwrite?`)) {
@@ -148,7 +147,7 @@ export function doImport (targetFolder, fileOrFolder) {
                 throw new Error('Canceled')
               }
             }
-            await targetDrive.writeFile(joinPath(path, name), reader.result, 'buffer')
+            await targetDrive.writeFile(targetPath, reader.result, 'buffer')
             resolve()
           } catch (e) {
             reject(e)
@@ -158,7 +157,7 @@ export function doImport (targetFolder, fileOrFolder) {
     })
   }
   
-  handleFileOrFolder(fileOrFolder.webkitGetAsEntry())
+  handleFileOrFolder(fileOrFolder.webkitGetAsEntry(), targetFolderParsed.pathname || '')
 }
 
 export async function canWriteTo (url) {
