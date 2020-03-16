@@ -3,6 +3,7 @@
 rm -Rf ./build
 mkdir ./build
 cp index.* ./build/
+cp serve.json ./build/
 cp -R ./js ./build/js
 cp -R ./css ./build/css
 cp -R ./webfonts ./build/webfonts
