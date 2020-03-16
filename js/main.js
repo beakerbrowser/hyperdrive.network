@@ -645,16 +645,17 @@ export class ExplorerApp extends LitElement {
     return true
   }
 
-  goto (item, newWindow = false, useHyperScheme = false) {
+  goto (item, newWindow = false, leaveExplorer = false) {
     var url
     if (typeof item === 'string') {
       url = item
     } else if (item.name.endsWith('.goto') && item.stat.metadata.href) {
       url = item.stat.metadata.href
+      leaveExplorer = true
     } else {
       url = joinPath(loc.getOrigin(), item.path)
     }
-    if (useHyperScheme) {
+    if (leaveExplorer) {
       if (newWindow) window.open(url)
       else window.location = url
     } else {
