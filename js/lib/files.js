@@ -60,9 +60,9 @@ export function getSubicon (item) {
 
 async function doCopyOrMove ({sourceItem, targetFolder}, op) {
   let sourceItemParsed = new URL(sourceItem)
-  var sourceDrive = new Hyperdrive(sourceItemParsed.hostname)
+  var sourceDrive = beaker.hyperdrive.drive(sourceItemParsed.hostname)
   let targetFolderParsed = new URL(targetFolder)
-  var targetDrive = new Hyperdrive(targetFolderParsed.hostname)
+  var targetDrive = beaker.hyperdrive.drive(targetFolderParsed.hostname)
 
   var name = sourceItemParsed.pathname.split('/').pop()
   var targetPath = joinPath(targetFolderParsed.pathname, name)
@@ -89,7 +89,7 @@ export async function doMove (params) {
 
 export function doImport (targetFolder, fileOrFolder) {
   let targetFolderParsed = new URL(targetFolder)
-  var targetDrive = new Hyperdrive(targetFolderParsed.hostname)
+  var targetDrive = beaker.hyperdrive.drive(targetFolderParsed.hostname)
 
   const handleFileOrFolder = (entry, path = '') => {
     if (entry.isDirectory) {
@@ -163,13 +163,13 @@ export function doImport (targetFolder, fileOrFolder) {
 
 export async function canWriteTo (url) {
   let urlp = new URL(url)
-  let drive = new Hyperdrive(urlp.host)
+  let drive = beaker.hyperdrive.drive(urlp.host)
   let acc = []
   for (let segment of urlp.pathname.split('/')) {
     acc.push(segment)
     let st = await drive.stat(acc.join('/'))
     if (st.mount && st.mount.key) {
-      drive = new Hyperdrive(st.mount.key)
+      drive = beaker.hyperdrive.drive(st.mount.key)
       acc = []
     }
   }

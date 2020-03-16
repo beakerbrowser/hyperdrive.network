@@ -91,7 +91,7 @@ export class FolderView extends LitElement {
   // =
 
   // onAddReadme (e) {
-  //   var drive = new Hyperdrive(this.currentDriveInfo.url)
+  //   var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
   //   drive.writeFile(this.realPathname + '/README.md', '')
   //   window.location = this.realUrl + '/README.md?edit'
   // }

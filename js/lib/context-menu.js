@@ -56,8 +56,8 @@ export function constructItems (app) {
             } else {
               url = loc.getUrl()
             }
-            await navigator.executeSidebarCommand('show-panel', 'editor-app')
-            await navigator.executeSidebarCommand('set-context', 'editor-app', url)
+            await beaker.shell.executeSidebarCommand('show-panel', 'editor-app')
+            await beaker.shell.executeSidebarCommand('set-context', 'editor-app', url)
           }
         })
       }

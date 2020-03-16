@@ -146,14 +146,14 @@ export class ExplorerApp extends LitElement {
   }
 
   async load () {
-    if (typeof Hyperdrive === 'undefined' || !loc.getUrl()) {
+    if (typeof beaker === 'undefined' || typeof beaker.hyperdrive === 'undefined' || !loc.getUrl()) {
       this.showHome = true
       this.requestUpdate()
       return
     }
 
     // read location information
-    var drive = new Hyperdrive(loc.getOrigin())
+    var drive = beaker.hyperdrive.drive(loc.getOrigin())
     try {
       this.driveInfo = await this.attempt(`Reading drive information (${loc.getOrigin()})`, () => drive.getInfo())
       this.driveTitle = getDriveTitle(this.driveInfo)
@@ -177,7 +177,7 @@ export class ExplorerApp extends LitElement {
       this.inlineMode = Boolean(getSavedConfig('inline-mode', false))
       this.sortMode = getSavedConfig('sort-mode', 'name')
       if (!this.watchStream) {
-        let currentDrive = new Hyperdrive(this.currentDriveInfo.url)
+        let currentDrive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
         this.watchStream = currentDrive.watch(this.realPathname)
         var hackSetupTime = Date.now()
         this.watchStream.addEventListener('changed', e => {
@@ -233,7 +233,7 @@ export class ExplorerApp extends LitElement {
 
   async readPathAncestry () {
     var ancestry = []
-    var drive = new Hyperdrive(loc.getOrigin())
+    var drive = beaker.hyperdrive.drive(loc.getOrigin())
     var pathParts = loc.getPath().split('/').filter(Boolean)
     while (pathParts.length) {
       let name = pathParts[pathParts.length - 1]
@@ -251,7 +251,7 @@ export class ExplorerApp extends LitElement {
       if (stat.mount) {
         mount = await this.attempt(
           `Reading drive information (${stat.mount.key}) for parent mount at ${path}`,
-          () => (new Hyperdrive(stat.mount.key)).getInfo()
+          () => beaker.hyperdrive.drive(stat.mount.key).getInfo()
         )
       }
       ancestry.unshift({name, path, stat, mount})
@@ -280,7 +280,7 @@ export class ExplorerApp extends LitElement {
       if (item.stat.mount) {
         item.mount = await this.attempt(
           `Reading drive information (${item.stat.mount.key}) for mounted drive at ${item.path}`,
-          () => (new Hyperdrive(item.stat.mount.key)).getInfo()
+          () => beaker.hyperdrive.drive(item.stat.mount.key).getInfo()
         )
       }
       item.shareUrl = this.getShareUrl(item)
@@ -311,9 +311,9 @@ export class ExplorerApp extends LitElement {
       item.realUrl = item.url
       item.url = joinPath(loc.getOrigin(), item.path)
       item.shareUrl = this.getShareUrl(item)
-      item.drive = await (new Hyperdrive(item.drive)).getInfo()
-      item.mount = item.mount ? await (new Hyperdrive(item.mount)).getInfo() : undefined
-      this.setItemIcons('', item)
+      item.drive = await beaker.hyperdrive.drive(item.drive).getInfo()
+      item.mount = item.mount ? beaker.hyperdrive.drive(item.mount).getInfo() : undefined
+      this.setItemIcons(item)
     })))
 
     // apply merge
@@ -444,7 +444,7 @@ export class ExplorerApp extends LitElement {
           <h1>Hyperdrive.Network</h1>
           <p>Hyperdrive is a peer-to-peer file network built for the Web, personal computing, and cloud computing.</p>
         </section>
-        ${typeof Hyperdrive === 'undefined' ? html`
+        ${typeof beaker === 'undefined' || typeof beaker.hyperdrive === 'undefined' ? html`
           <aside>
             <h3>Your browser does not support Hyperdrive.</h3>
             <p>Your browser needs to support Hyperdrive to use this site. Try <a href="https://beakerbrowser.com">Beaker Browser</a>!</p>
@@ -725,7 +725,7 @@ export class ExplorerApp extends LitElement {
   async onClickNewDrive (e) {
     e.preventDefault()
     e.stopPropagation()
-    var drive = await Hyperdrive.create()
+    var drive = await beaker.hyperdrive.createDrive()
     toast.create('Drive created')
     loc.openUrl(drive.url)
   }
@@ -735,7 +735,7 @@ export class ExplorerApp extends LitElement {
     var filename = prompt('Enter the name of your new file')
     if (filename) {
       var pathname = joinPath(this.realPathname, filename)
-      var drive = new Hyperdrive(this.currentDriveInfo.url)
+      var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
       if (await drive.stat(pathname).catch(e => false)) {
         toast.create('A file or folder already exists at that name')
         return
@@ -748,8 +748,8 @@ export class ExplorerApp extends LitElement {
         return
       }
       var url = joinPath(loc.getUrl(), filename)
-      await navigator.executeSidebarCommand('show-panel', 'editor-app')
-      await navigator.executeSidebarCommand('set-context', 'editor-app', url)
+      await beaker.shell.executeSidebarCommand('show-panel', 'editor-app')
+      await beaker.shell.executeSidebarCommand('set-context', 'editor-app', url)
     }
   }
 
@@ -758,7 +758,7 @@ export class ExplorerApp extends LitElement {
     var foldername = prompt('Enter the name of your new folder')
     if (foldername) {
       var pathname = joinPath(this.realPathname, foldername)
-      var drive = new Hyperdrive(this.currentDriveInfo.url)
+      var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
       try {
         await drive.mkdir(pathname)
       } catch (e) {
@@ -770,9 +770,9 @@ export class ExplorerApp extends LitElement {
 
   async onNewMount (e) {
     if (!this.currentDriveInfo.writable) return
-    var drive = new Hyperdrive(this.currentDriveInfo.url)
-    var targetUrl = await navigator.selectDriveDialog({title: 'Select a drive'})
-    var target = new Hyperdrive(targetUrl)
+    var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
+    var targetUrl = await beaker.shell.selectDriveDialog({title: 'Select a drive'})
+    var target = beaker.hyperdrive.drive(targetUrl)
     var info = await target.getInfo()
     var name = await getAvailableName(drive, this.realPathname, info.title)
     try {
@@ -785,13 +785,13 @@ export class ExplorerApp extends LitElement {
   }
 
   async onForkDrive (e) {
-    var drive = await Hyperdrive.fork(this.currentDriveInfo.url)
+    var drive = await beaker.hyperdrive.forkDrive(this.currentDriveInfo.url)
     toast.create('Drive created')
     loc.setUrl(drive.url)
   }
 
   async onDriveProperties (e) {
-    await navigator.drivePropertiesDialog(this.currentDriveInfo.url)
+    await beaker.shell.drivePropertiesDialog(this.currentDriveInfo.url)
     this.load()
   }
 
@@ -799,7 +799,7 @@ export class ExplorerApp extends LitElement {
     if (!this.currentDriveInfo.writable) return
     toast.create('Importing...')
     try {
-      await navigator.importFilesDialog(loc.getUrl())
+      await beaker.shell.importFilesDialog(loc.getUrl())
       toast.create('Import complete', 'success')
     } catch (e) {
       console.log(e)
@@ -811,7 +811,7 @@ export class ExplorerApp extends LitElement {
     var urls = (this.selection.length ? this.selection : this.items).map(item => item.url)
     toast.create('Exporting...')
     try {
-      await navigator.exportFilesDialog(urls)
+      await beaker.shell.exportFilesDialog(urls)
       toast.create('Export complete', 'success')
     } catch (e) {
       console.log(e)
@@ -826,7 +826,7 @@ export class ExplorerApp extends LitElement {
     if (newName) {
       var oldPath = this.selection[0] ? joinPath(this.realPathname, oldName) : this.realPathname
       var newPath = oldPath.split('/').slice(0, -1).concat([newName]).join('/')
-      var drive = new Hyperdrive(this.currentDriveInfo.url)
+      var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
       try {
         await drive.rename(oldPath, newPath)
       } catch (e) {
@@ -844,7 +844,7 @@ export class ExplorerApp extends LitElement {
   async onDelete (e) {
     if (!this.currentDriveInfo.writable) return
 
-    var drive = new Hyperdrive(this.currentDriveInfo.url)
+    var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
     const del = async (path, stat) => {
       if (stat.mount && stat.mount.key) {
         await drive.unmount(path)
@@ -886,7 +886,7 @@ export class ExplorerApp extends LitElement {
   async onUpdateFileMetadata (e) {
     if (!this.currentDriveInfo.writable) return
     var {newMetadata, deletedKeys} = e.detail
-    var drive = new Hyperdrive(this.currentDriveInfo.url)
+    var drive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
     try {
       if (this.selection.length) {
         for (let sel of this.selection) {
@@ -940,7 +940,7 @@ export class ExplorerApp extends LitElement {
 
   async onSelectDrive (e) {
     e.preventDefault()
-    var drive = await navigator.selectDriveDialog()
+    var drive = await beaker.shell.selectDriveDialog()
     loc.setUrl(drive)
   }
 }
