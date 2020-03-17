@@ -58,6 +58,7 @@ export class ExplorerApp extends LitElement {
     this.mountTitle = undefined
     
     // UI state
+    this.embedMode = window != window.top // detect if in an iframe
     this.showHome = false
     this.loadingState = LOADING_STATES.INITIAL
     this.errorState = undefined
@@ -161,6 +162,12 @@ export class ExplorerApp extends LitElement {
       document.title = this.filename ? `${this.driveTitle} / ${this.filename}` : this.driveTitle
 
       this.pathInfo = await this.attempt(`Reading path information (${loc.getPath()})`, () => drive.stat(loc.getPath()))
+      if (this.embedMode && this.pathInfo.isFile()) {
+        // go up to a directory
+        loc.setPath(loc.getPath().split('/').slice(0, -1).join('/'))
+        return
+      }
+
       await this.readPathAncestry()
     } catch (e) {
       if (e.name === 'NotFoundError') {
@@ -398,9 +405,10 @@ export class ExplorerApp extends LitElement {
       <div
         class=${classMap({
           layout: true,
+          'embed-mode': this.embedMode,
           ['render-mode-' + this.renderMode]: true,
-          'hide-nav-left': this.hideNavLeft,
-          'hide-nav-right': this.hideNavRight,
+          'hide-nav-left': this.embedMode || this.hideNavLeft,
+          'hide-nav-right': this.embedMode || this.hideNavRight,
         })}
         @contextmenu=${this.onContextmenuLayout}
         @goto=${this.onGoto}
@@ -417,7 +425,7 @@ export class ExplorerApp extends LitElement {
         @delete=${this.onDelete}
         @update-file-metadata=${this.onUpdateFileMetadata}
       >
-        <div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>
+        ${!this.embedMode ? html`<div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>` : ''}
         ${this.loadingState === LOADING_STATES.INITIAL
           ? this.renderInitialLoading()
           : html`
@@ -429,7 +437,7 @@ export class ExplorerApp extends LitElement {
               ${this.renderErrorState()}
               ${this.renderView()}
             </main>
-            ${this.renderRightNav()}
+            ${!this.embedMode ? this.renderRightNav() : ''}
           `}
       </div>
     `
@@ -489,9 +497,15 @@ export class ExplorerApp extends LitElement {
           <span class="date">${timeDifference(this.pathInfo.mtime, true, 'ago')}</span>
         ` : ''}
         <span class="spacer"></span>
-        <button class="transparent" @click=${this.onClickNewDrive}>
-          <span class="fas fa-plus"></span> New Drive
-        </button>
+        ${!this.embedMode ? html`
+          <button class="transparent" @click=${this.onClickNewDrive}>
+            <span class="fas fa-plus"></span> New Drive
+          </button>
+        ` : html`
+          <button class="transparent" @click=${this.onClickPopOut}>
+            <span class="fas fa-clone"></span> Pop out of sidebar
+          </button>
+        `}
         <button class="transparent" @click=${this.onClickSettings}>
           <span class="fas fa-cog"></span> Settings
         </button>
@@ -655,7 +669,10 @@ export class ExplorerApp extends LitElement {
     } else {
       url = joinPath(loc.getOrigin(), item.path)
     }
-    if (leaveExplorer) {
+    if (this.embedMode && !item.stat.isDirectory()) {
+      if (newWindow) beaker.browser.openUrl(url, {setActive: true})
+      else beaker.browser.gotoUrl(url)
+    } else if (leaveExplorer) {
       if (newWindow) window.open(url)
       else window.location = url
     } else {
@@ -721,6 +738,11 @@ export class ExplorerApp extends LitElement {
     el.classList.add('active')
     await settingsMenu.create(this, {x: (rect.left + rect.right) / 2, y: rect.bottom})
     el.classList.remove('active')
+  }
+
+  onClickPopOut (e) {
+    beaker.browser.gotoUrl(location.toString())
+    beaker.shell.executeSidebarCommand('hide-panel', 'files-explorer-app')
   }
 
   async onClickNewDrive (e) {
@@ -938,7 +960,8 @@ export class ExplorerApp extends LitElement {
   }
 
   async doDiff (base) {
-    window.open(`beaker://diff/?base=${base}`)
+    if (this.embedMode) beaker.browser.gotoUrl(`beaker://diff/?base=${base}`)
+    else window.open(`beaker://diff/?base=${base}`)
   }
 
   async onSelectDrive (e) {

@@ -1,22 +1,6 @@
 import {css} from '../../../vendor/lit-element/lit-element.js'
 
 const cssStr = css`
-
-:host {
-  --color-drive: #ccd;
-  --color-folder: #9ec2e0;
-  --color-file: #bbbbcc;
-  --color-goto: #bbbbce;
-  --color-itemname: #484444;
-  --color-itemdrive: #99a;
-  --color-viewfile: #ffffff;
-  --color-viewfile-outline: #a7a7ad;
-  --color-hover-bg: #f3f3f8;
-  --color-selected-fg: #fff;
-  --color-selected-bg: #4379e4;
-  --color-selected-bg-icon: #dddde5;
-}
-
 .items {
   display: grid;
   grid-template-columns: repeat(auto-fill, 110px);
@@ -43,26 +27,26 @@ const cssStr = css`
 }
 
 .item .fa-fw.fa-folder {
-  color: var(--color-folder);
+  color: var(--file-grid--color-folder);
 }
 
 .item .mainicon.fa-fw.fa-hdd {
-  color: var(--color-drive);
+  color: var(--file-grid--color-drive);
 }
 
 .item .fa-fw.fa-layer-group {
-  -webkit-text-stroke: 1px var(--color-viewfile-outline);
-  color: var(--color-viewfile);
+  -webkit-text-stroke: 1px var(--file-grid--color-viewfile-outline);
+  color: var(--file-grid--color-viewfile);
   font-size: 36px;
 }
 
 .item .fa-fw.fa-external-link-alt {
   font-size: 28px;
-  color: var(--color-goto);
+  color: var(--file-grid--color-goto);
 }
 
 .item .fa-fw.fa-file {
-  -webkit-text-stroke: 1px var(--color-file);
+  -webkit-text-stroke: 1px var(--file-grid--color-file);
   color: #fff;
   font-size: 36px;
   margin-top: 1px;
@@ -71,7 +55,7 @@ const cssStr = css`
 
 .item .name,
 .item .author {
-  color: var(--color-itemname);
+  color: var(--file-grid--color-itemname);
   width: 100%;
   text-align: center;
   white-space: nowrap;
@@ -82,7 +66,7 @@ const cssStr = css`
 }
 
 .item .author {
-  color: var(--color-itemdrive);
+  color: var(--file-grid--color-itemdrive);
   font-size: 10px;
 }
 
@@ -116,13 +100,13 @@ const cssStr = css`
 }
 
 .item.selected .fa-fw {
-  background: var(--color-selected-bg-icon);
+  background: var(--file-grid--color-selected-bg-icon);
   border-radius: 4px;
 }
 
 .item.selected .name {
-  background: var(--color-selected-bg);
-  color: var(--color-selected-fg);
+  background: var(--file-grid--color-selected-bg);
+  color: var(--file-grid--color-selected-fg);
 }
 
 `

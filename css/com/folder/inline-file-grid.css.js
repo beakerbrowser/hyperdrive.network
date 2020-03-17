@@ -8,7 +8,7 @@ ${tooltipCSS}
   display: block;
   padding-bottom: 10px;
 
-  --color-selected-bg: #f3f3f8;
+  --color-selected-bg: ;
 }
 
 a {
@@ -44,11 +44,11 @@ a:hover {
 }
 
 .item .header .author {
-  color: #99a;
+  color: var(--inline-file-grid--color-itemauthor);
 }
 
 .item .header .name {
-  color: #556;
+  color: var(--inline-file-grid--color-itemname);
   font-weight: 500;
 }
 
@@ -72,7 +72,7 @@ a:hover {
 }
 
 .item.selected {
-  background: var(--color-selected-bg);
+  background: var(--inline-file-grid--color-selected-bg);
 }
 
 .item.selected .content {

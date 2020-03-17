@@ -6,7 +6,6 @@ ${tooltipCSS}
 
 :host {
   display: block;
-  --color-selected-bg: #f3f3f8;
 }
 
 a {
@@ -20,13 +19,14 @@ a:hover {
 .items {
   padding: 0;
   box-sizing: border-box;
+  margin-top: 5px;
 }
 
 .item {
   display: flex;
   padding: 10px;
   overflow: hidden;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--inline-file-list--color-border);
 }
 
 .item .info {
@@ -35,7 +35,7 @@ a:hover {
   padding-right: 10px;
   box-sizing: border-box;
   font-size: 12px;
-  color: #99a;
+  color: var(--inline-file-list--color-iteminfo);
 }
 
 .item .info img {
@@ -61,11 +61,11 @@ a:hover {
 .item .info .name,
 .item .info .folder,
 .item .info .date {
-  color: #556;
+  color: var(--inline-file-list--color-itemprop);
 }
 
 .item .info .author {
-  color: var(--blue);
+  color: var(--link-color);
   font-weight: 500;
 }
 
@@ -89,7 +89,7 @@ a:hover {
 }
 
 .item.selected {
-  background: var(--color-selected-bg);
+  background: var(--inline-file-list--color-selected-bg);
 }
 `
 export default cssStr

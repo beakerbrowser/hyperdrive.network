@@ -9,8 +9,8 @@ const cssStr = css`
 }
 
 h4 {
-  border-top: 1px solid #e3e3ee;
-  color: #b0b0bc;
+  border-top: 1px solid var(--base-files-view--h4-border-color);
+  color: var(--base-files-view--h4-color);
   padding-top: 6px;
   padding-left: 4px;
   margin: 0;
@@ -18,7 +18,7 @@ h4 {
 }
 
 .empty {
-  background: var(--bg-color--light);
+  background: var(--empty-bg);
   padding: 40px;
   margin: 14px 0;
   border-radius: 8px;
@@ -41,7 +41,7 @@ h4 {
 
 .drag-hover,
 .drop-target {
-  background: #f5f5ff !important;
+  background: var(--base-files-view--drag-bg) !important;
   outline: rgb(191, 191, 243) dashed 1px;
 }
 

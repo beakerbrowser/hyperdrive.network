@@ -9,7 +9,6 @@ ${typographyCSS}
   --file-height: auto;
   --text-font-size: 14px;
   --text-padding: 0;
-  --text-background: transparent;
   --text-min-height: none;
   --text-max-height: none;
   --text-min-width: none;
@@ -46,7 +45,6 @@ a:hover {
   word-break: break-all;
   font-size: var(--text-font-size);
   padding: var(--text-padding);
-  background: var(--text-background);
   max-width: var(--text-max-width);
   border: var(--text-border-width) solid #ccc;
   border-radius: var(--text-border-radius);
@@ -55,7 +53,6 @@ a:hover {
 .markdown {
   box-sizing: border-box;
   padding: var(--text-padding);
-  background: var(--text-background);
   min-height: var(--text-min-height);
   max-height: var(--text-max-height);
   max-width: var(--text-max-width);
@@ -162,7 +159,6 @@ audio {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-sizing: border-box;
-  background: #fff;
 }
 
 .mount .info .title {
@@ -210,7 +206,6 @@ audio {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-sizing: border-box;
-  background: #fff;
 }
 
 .goto > * {

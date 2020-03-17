@@ -3,20 +3,6 @@ import {css} from '../../../vendor/lit-element/lit-element.js'
 const cssStr = css`
 
 :host {
-  --color-drive: #ccd;
-  --color-folder: #9ec2e0;
-  --color-file: #9a9aab;
-  --color-goto: #9a9aab;
-  --color-subicon: #556;
-  --color-itemname: #333;
-  --color-itemprop: #777;
-  --color-viewfile: #ffffff;
-  --color-viewfile-outline: #95959c;
-  --color-hover-bg: #f3f3f8;
-  --color-subicon-selected: #fff;
-  --color-itemname-selected: #fff;
-  --color-itemprop-selected: rgba(255, 255, 255, 0.7);
-  --color-selected-bg: #4379e4;
 }
 
 .items {
@@ -29,7 +15,7 @@ const cssStr = css`
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #fff5;
+  border-bottom: 1px solid var(--file-list--item-border-color);
   padding: 4px;
   letter-spacing: -0.2px;
 }
@@ -38,7 +24,7 @@ const cssStr = css`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 13px;
-  color: var(--color-itemprop);
+  color: var(--file-list--color-itemprop);
 }
 
 .item .icon {
@@ -54,30 +40,30 @@ const cssStr = css`
 }
 
 .item .fa-fw.fa-folder {
-  color: var(--color-folder);
+  color: var(--file-list--color-folder);
 }
 
 .item .mainicon.fa-fw.fa-hdd {
-  color: var(--color-drive);
+  color: var(--file-list--color-drive);
 }
 
 .item .fa-fw.fa-layer-group {
-  -webkit-text-stroke: 1px var(--color-viewfile-outline);
-  color: var(--color-viewfile);
+  -webkit-text-stroke: 1px var(--file-list--color-viewfile-outline);
+  color: var(--file-list--color-viewfile);
 }
 
 .item .fa-fw.fa-file {
-  -webkit-text-stroke: 1px var(--color-file);
+  -webkit-text-stroke: 1px var(--file-list--color-file);
   color: #fff;
 }
 
 .item .fa-fw.fa-external-link-alt {
-  color: var(--color-goto);
+  color: var(--file-list--color-goto);
   font-size: 13px;
 }
 
 .item .subicon {
-  color: var(--color-subicon);
+  color: var(--file-list--color-subicon);
   font-size: 10px;
   position: absolute;
   left: 0;
@@ -93,7 +79,7 @@ const cssStr = css`
 }
 
 .item .name {
-  color: var(--color-itemname);
+  color: var(--file-list--color-itemname);
   flex: 1;
 }
 
@@ -111,15 +97,15 @@ const cssStr = css`
 }
 
 .item.selected {
-  background: var(--color-selected-bg);
+  background: var(--file-list--color-selected-bg);
 }
 
 .item.selected > * {
-  color: var(--color-itemprop-selected);
+  color: var(--file-list--color-itemprop-selected);
 }
 
 .item.selected .name {
-  color: var(--color-itemname-selected);
+  color: var(--file-list--color-itemname-selected);
 }
 
 .item.selected .fa-fw {
@@ -128,7 +114,7 @@ const cssStr = css`
 }
 
 .item.selected .subicon {
-  color: var(--color-subicon-selected);
+  color: var(--file-list--color-subicon-selected);
 }
 
 `
