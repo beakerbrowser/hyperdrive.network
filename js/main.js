@@ -68,7 +68,11 @@ export class ExplorerApp extends LitElement {
     this.sortMode = undefined
     this.hideNavLeft = true
     this.hideNavRight = false
-    
+
+    if (!this.embedMode) {
+      document.body.style.backgroundColor = '#fff'
+    }
+
     this.load()
   }
 
