@@ -174,7 +174,7 @@ export class ExplorerApp extends LitElement {
 
       await this.readPathAncestry()
     } catch (e) {
-      if (e.name === 'NotFoundError') {
+      if (e.message.includes('NotFoundError')) {
         this.pathInfo = {isFile: ()=>false, isDirectory: ()=>false}
         this.loadingState = LOADING_STATES.LOADED
         this.requestUpdate()
@@ -620,8 +620,8 @@ export class ExplorerApp extends LitElement {
   }
 
   renderErrorState () {
-    if (!this.errorState || this.errorState.error.name === 'TimeoutError') return undefined
-    if (this.errorState.error.name === 'NotFoundError') {
+    if (!this.errorState || this.errorState.error.message.includes('TimeoutError')) return undefined
+    if (this.errorState.error.message.includes('NotFoundError')) {
       return html`
         <div class="error-view">
           <div class="error-title"><span class="fas fa-fw fa-exclamation-triangle"></span> File or folder not found</div>

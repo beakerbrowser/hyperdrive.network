@@ -18,6 +18,8 @@ ${spinnerCSS}
   --button-color: #333;
   --loading-color: #667;
   --spinner-color: #778;
+  --error-bg: #fee;
+  --error-pre-bg: #fffa;
   --error-color: #c55;
   --header-color: #556;
   --header-date-color: #99a;
@@ -82,6 +84,9 @@ ${spinnerCSS}
   --empty-bg: #334;
   --loading-color: #dde;
   --empty-color: #dde;
+  --error-bg: #ffeeee0d;
+  --error-color: #ff1010;
+  --error-pre-bg: rgba(0, 0, 0, 0.29);
 
   --base-files-view--h4-border-color: #6e6e80;
   --base-files-view--h4-color: #babac5;
@@ -223,7 +228,7 @@ main {
 }
 
 .error-view {
-  background: #fee;
+  background: var(--error-bg);
   padding: 40px;
   margin: 20px;
   border-radius: 8px;
@@ -246,7 +251,7 @@ main .error-view {
 }
 
 .error-view pre {
-  background: #fffa;
+  background: var(--error-pre-bg);
   line-height: 1;
   padding: 10px;
   border-radius: 4px;
