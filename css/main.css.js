@@ -569,7 +569,7 @@ nav .metadata + button {
   font-size: 10px;
 }
 
-.header button.active {
+.header button:not(.primary).active {
   background: #eef;
 }
 

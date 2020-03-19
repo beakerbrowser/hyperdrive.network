@@ -727,17 +727,22 @@ export class ExplorerApp extends LitElement {
     this.requestUpdate()
   }
 
-  onClickActions (e) {
+  async onClickActions (e) {
+    let el = e.currentTarget
+    if (el.classList.contains('active')) return
     e.preventDefault()
     e.stopPropagation()
     let rect = e.currentTarget.getClientRects()[0]
-    this.onShowMenu({detail: {x: rect.right, y: rect.bottom, right: true}})
+    el.classList.add('active')
+    await this.onShowMenu({detail: {x: rect.right, y: rect.bottom, right: true}})
+    el.classList.remove('active')
   }
 
   async onClickSettings (e) {
+    let el = e.currentTarget
+    if (el.classList.contains('active')) return
     e.preventDefault()
     e.stopPropagation()
-    let el = e.currentTarget
     let rect = el.getClientRects()[0]
     el.classList.add('active')
     await settingsMenu.create(this, {x: (rect.left + rect.right) / 2, y: rect.bottom})
@@ -938,7 +943,7 @@ export class ExplorerApp extends LitElement {
   }
 
   onShowMenu (e) {
-    contextMenu.create({
+    return contextMenu.create({
       x: e.detail.x,
       y: e.detail.y,
       right: e.detail.right || (e.detail.x > document.body.scrollWidth - 300),
