@@ -26,6 +26,7 @@ ${spinnerCSS}
   --nav-bg: #f1f1f6;
   --label-bg: #f1f1f6;
   --empty-bg: #f8f8fc;
+  --empty-color: #667;
 
   --base-files-view--h4-border-color: #e3e3ee;
   --base-files-view--h4-color: #b0b0bc;
@@ -78,6 +79,9 @@ ${spinnerCSS}
   --primary-color: #eef;
   --header-color: #f5f5ff;
   --button-color: #eee;
+  --empty-bg: #334;
+  --loading-color: #dde;
+  --empty-color: #dde;
 
   --base-files-view--h4-border-color: #6e6e80;
   --base-files-view--h4-color: #babac5;

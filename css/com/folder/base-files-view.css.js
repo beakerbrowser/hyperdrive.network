@@ -22,7 +22,7 @@ h4 {
   padding: 40px;
   margin: 14px 0;
   border-radius: 8px;
-  color: #667;
+  color: var(--empty-color);
 }
 
 .items {
