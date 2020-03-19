@@ -507,7 +507,7 @@ export class ExplorerApp extends LitElement {
           </button>
         ` : html`
           <button class="transparent" @click=${this.onClickPopOut}>
-            <span class="fas fa-clone"></span> Pop out of sidebar
+            <span class="fas fa-clone"></span> Pop out
           </button>
         `}
         <button class="transparent" @click=${this.onClickSettings}>
@@ -745,7 +745,7 @@ export class ExplorerApp extends LitElement {
   }
 
   onClickPopOut (e) {
-    beaker.browser.gotoUrl(location.toString())
+    beaker.browser.openUrl(location.toString(), {setActive: true, adjacentActive: true})
     beaker.shell.executeSidebarCommand('hide-panel', 'files-explorer-app')
   }
 
