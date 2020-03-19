@@ -807,6 +807,7 @@ export class ExplorerApp extends LitElement {
     var target = beaker.hyperdrive.drive(targetUrl)
     var info = await target.getInfo()
     var name = await getAvailableName(drive, this.realPathname, info.title)
+    name = prompt('Enter the mount name', name)
     try {
       await drive.mount(joinPath(this.realPathname, name), target.url)
     } catch (e) {
