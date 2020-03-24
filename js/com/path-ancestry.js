@@ -1,5 +1,6 @@
 import { LitElement, html } from '../../vendor/lit-element/lit-element.js'
 import { handleDragDrop } from '../lib/drag-drop.js'
+import { emit } from '../lib/dom.js'
 
 export class PathAncestry extends LitElement {
   static get properties () {
@@ -29,7 +30,8 @@ export class PathAncestry extends LitElement {
     return html`
       <a
         class="author"
-        href=${'/' + this.driveInfo.url.replace(/^hyper:\/\//, '')}
+        href=${this.driveInfo.url}
+        @click=${this.onClickParentFolder}
         @dragenter=${this.onDragenter}
         @dragleave=${this.onDragleave}
         @dragover=${this.onDragOver}
@@ -48,7 +50,8 @@ export class PathAncestry extends LitElement {
         <span class="fas fa-fw fa-angle-right"></span>
         <a
           class="name"
-          href=${'/' + this.driveInfo.url.replace(/^hyper:\/\//, '') + item.path}
+          href=${this.driveInfo.url + item.path}
+          @click=${this.onClickParentFolder}
           @dragenter=${this.onDragenter}
           @dragleave=${this.onDragleave}
           @dragover=${this.onDragOver}
@@ -63,6 +66,11 @@ export class PathAncestry extends LitElement {
 
   // events
   // =
+
+  onClickParentFolder (e) {
+    e.preventDefault()
+    emit(this, 'goto', {detail: {item: e.currentTarget.getAttribute('href')}})
+  }
 
   onDragenter (e) {
     e.preventDefault()

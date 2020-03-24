@@ -673,15 +673,28 @@ export class ExplorerApp extends LitElement {
     } else {
       url = joinPath(loc.getOrigin(), item.path)
     }
-    if (this.embedMode && !item.stat.isDirectory()) {
-      if (newWindow) beaker.browser.openUrl(url, {setActive: true})
-      else beaker.browser.gotoUrl(url)
-    } else if (leaveExplorer) {
-      if (newWindow) window.open(url)
-      else window.location = url
+    if (this.attachedMode) {
+      if (leaveExplorer) {
+        if (newWindow) beaker.browser.openUrl(url, {setActive: true})
+        else beaker.browser.gotoUrl(url)
+      } else {
+        if (newWindow) {
+          beaker.browser.openUrl(url, {setActive: true})
+          if (!url.startsWith(location.origin)) {
+            url = joinPath(location.origin, url.slice('hyper://'.length))
+          }
+        } else {
+          beaker.browser.gotoUrl(url)
+        }
+      }
     } else {
-      if (newWindow) loc.openUrl(url)
-      else loc.setUrl(url)
+      if (leaveExplorer) {
+        if (newWindow) window.open(url)
+        else window.location = url
+      } else {
+        if (newWindow) loc.openUrl(url)
+        else loc.setUrl(url)
+      }
     }
   }
 
