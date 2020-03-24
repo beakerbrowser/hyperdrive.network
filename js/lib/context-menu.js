@@ -11,14 +11,16 @@ export function constructItems (app) {
     let writable = app.selection.reduce((acc, v) => acc && v.drive.writable, true)
     items.push({
       icon: 'fas fa-fw fa-external-link-alt',
-      label: 'Open in new tab',
+      label: 'Explore in new tab',
       click: () => app.goto(sel, true)
     })
-    items.push({
-      icon: 'fas fa-fw fa-desktop',
-      label: 'Open as website',
-      click: () => app.goto(app.getShareUrl(sel), true, true)
-    })
+    if (!app.attachedMode) {
+      items.push({
+        icon: 'fas fa-fw fa-desktop',
+        label: 'Open',
+        click: () => app.goto(app.getShareUrl(sel), true, true)
+      })
+    }
     items.push({
       icon: html`
         <i class="fa-stack" style="font-size: 6px">
@@ -26,7 +28,7 @@ export function constructItems (app) {
           <span class="fas fa-fw fa-share fa-stack-1x" style="margin-left: -10px; margin-top: -5px; font-size: 7px"></span>
         </i>
       `,
-      label: 'Copy drive link',
+      label: 'Copy URL',
       disabled: !app.canShare(sel),
       click: () => {
         writeToClipboard(sel.shareUrl)
@@ -121,12 +123,14 @@ export function constructItems (app) {
       click: () => app.onNewMount()
     })
     items.push('-')
-    items.push({
-      icon: 'fas fa-fw fa-desktop',
-      label: 'Open as website',
-      disabled: !app.canShare(app.locationAsItem),
-      click: () => app.goto(app.getShareUrl(app.locationAsItem), true, true)
-    })
+    if (!app.attachedMode) {
+      items.push({
+        icon: 'fas fa-fw fa-desktop',
+        label: 'Open',
+        disabled: !app.canShare(app.locationAsItem),
+        click: () => app.goto(app.getShareUrl(app.locationAsItem), true, true)
+      })
+    }
     items.push({
       icon: html`
         <i class="fa-stack" style="font-size: 6px">
@@ -134,7 +138,7 @@ export function constructItems (app) {
           <span class="fas fa-fw fa-share fa-stack-1x" style="margin-left: -10px; margin-top: -5px; font-size: 7px"></span>
         </i>
       `,
-      label: `Copy drive link`,
+      label: `Copy URL`,
       disabled: !app.canShare(app.locationAsItem),
       click: () => {
         writeToClipboard(app.getShareUrl(app.locationAsItem))
