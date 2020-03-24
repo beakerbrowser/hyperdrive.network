@@ -76,7 +76,7 @@ ${spinnerCSS}
   color: var(--primary-color);
 }
 
-.layout.embed-mode {  
+.layout.attached-mode {  
   --primary-bg: #223;
   --primary-color: #eef;
   --header-color: #f5f5ff;
@@ -127,7 +127,7 @@ ${spinnerCSS}
   --inline-file-grid--color-itemauthor: #99a;
 }
 
-.layout.embed-mode::-webkit-scrollbar {
+.layout.attached-mode::-webkit-scrollbar {
   display: none;
 }
 
@@ -143,8 +143,8 @@ button {
   color: var(--button-color);
 }
 
-.layout.embed-mode button.transparent:hover,
-.layout.embed-mode button.transparent.active {
+.layout.attached-mode button.transparent:hover,
+.layout.attached-mode button.transparent.active {
   background: #fff3;
 }
 
@@ -189,6 +189,8 @@ main {
 
 .hide-nav-left main { margin-left: 16px; }
 .hide-nav-right main { margin-right: 16px; }
+.layout.attached-mode.hide-nav-left main { margin-left: 12px; }
+.layout.attached-mode.hide-nav-right main { margin-right: 12px; }
 
 .loading-view {
   background: var(--empty-bg);
@@ -546,8 +548,8 @@ nav .metadata + button {
   white-space: nowrap;
 }
 
-.layout.embed-mode .header {
-  padding-right: 20px; /* give room for the 'x' button */
+.layout.attached-mode .header {
+  padding-right: 45px; /* give room for the buttons */
 }
 
 .header > *:not(:last-child) {

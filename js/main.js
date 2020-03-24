@@ -58,7 +58,7 @@ export class ExplorerApp extends LitElement {
     this.mountTitle = undefined
     
     // UI state
-    this.embedMode = window != window.top // detect if in an iframe
+    this.attachedMode = window != window.top // detect if in an iframe
     this.showHome = false
     this.loadingState = LOADING_STATES.INITIAL
     this.errorState = undefined
@@ -69,7 +69,7 @@ export class ExplorerApp extends LitElement {
     this.hideNavLeft = true
     this.hideNavRight = false
 
-    if (!this.embedMode) {
+    if (!this.attachedMode) {
       document.body.style.backgroundColor = '#fff'
     }
 
@@ -166,7 +166,7 @@ export class ExplorerApp extends LitElement {
       document.title = this.filename ? `${this.driveTitle} / ${this.filename}` : this.driveTitle
 
       this.pathInfo = await this.attempt(`Reading path information (${loc.getPath()})`, () => drive.stat(loc.getPath()))
-      if (this.embedMode && this.pathInfo.isFile()) {
+      if (this.attachedMode && this.pathInfo.isFile()) {
         // go up to a directory
         loc.setPath(loc.getPath().split('/').slice(0, -1).join('/'))
         return
@@ -409,10 +409,10 @@ export class ExplorerApp extends LitElement {
       <div
         class=${classMap({
           layout: true,
-          'embed-mode': this.embedMode,
+          'attached-mode': this.attachedMode,
           ['render-mode-' + this.renderMode]: true,
-          'hide-nav-left': this.embedMode || this.hideNavLeft,
-          'hide-nav-right': this.embedMode || this.hideNavRight,
+          'hide-nav-left': this.attachedMode || this.hideNavLeft,
+          'hide-nav-right': this.attachedMode || this.hideNavRight,
         })}
         @contextmenu=${this.onContextmenuLayout}
         @goto=${this.onGoto}
@@ -429,7 +429,7 @@ export class ExplorerApp extends LitElement {
         @delete=${this.onDelete}
         @update-file-metadata=${this.onUpdateFileMetadata}
       >
-        ${!this.embedMode ? html`<div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>` : ''}
+        ${!this.attachedMode ? html`<div class="nav-toggle right" @click=${e => this.toggleNav('right')}><span class="fas fa-caret-${this.hideNavRight ? 'left' : 'right'}"></span></div>` : ''}
         ${this.loadingState === LOADING_STATES.INITIAL
           ? this.renderInitialLoading()
           : html`
@@ -441,7 +441,7 @@ export class ExplorerApp extends LitElement {
               ${this.renderErrorState()}
               ${this.renderView()}
             </main>
-            ${!this.embedMode ? this.renderRightNav() : ''}
+            ${!this.attachedMode ? this.renderRightNav() : ''}
           `}
       </div>
     `
@@ -970,7 +970,7 @@ export class ExplorerApp extends LitElement {
   }
 
   async doDiff (base) {
-    if (this.embedMode) beaker.browser.gotoUrl(`beaker://diff/?base=${base}`)
+    if (this.attachedMode) beaker.browser.gotoUrl(`beaker://diff/?base=${base}`)
     else window.open(`beaker://diff/?base=${base}`)
   }
 
