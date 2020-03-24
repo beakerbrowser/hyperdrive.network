@@ -50,7 +50,7 @@ export function constructItems (app) {
         items.push({
           icon: 'fas fa-fw fa-edit',
           label: 'Edit',
-          disabled: !writable || !sel.stat.isFile(),
+          disabled: !sel.stat.isFile(),
           click: async () => {
             let url
             if (app.selection[0]) {
