@@ -11,7 +11,7 @@ export function constructItems (app) {
     let writable = app.selection.reduce((acc, v) => acc && v.drive.writable, true)
     items.push({
       icon: 'fas fa-fw fa-external-link-alt',
-      label: 'Explore in new tab',
+      label: `${app.attachedMode ? 'Open' : 'Explore'} in new tab`,
       click: () => app.goto(sel, true)
     })
     if (!app.attachedMode) {
