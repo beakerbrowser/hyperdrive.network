@@ -501,15 +501,6 @@ export class ExplorerApp extends LitElement {
           <span class="date">${timeDifference(this.pathInfo.mtime, true, 'ago')}</span>
         ` : ''}
         <span class="spacer"></span>
-        ${!this.embedMode ? html`
-          <button class="transparent" @click=${this.onClickNewDrive}>
-            <span class="fas fa-plus"></span> New Drive
-          </button>
-        ` : html`
-          <button class="transparent" @click=${this.onClickPopOut}>
-            <span class="fas fa-clone"></span> Pop out
-          </button>
-        `}
         <button class="transparent" @click=${this.onClickSettings}>
           <span class="fas fa-cog"></span> Settings
         </button>
@@ -760,19 +751,6 @@ export class ExplorerApp extends LitElement {
     el.classList.add('active')
     await settingsMenu.create(this, {x: (rect.left + rect.right) / 2, y: rect.bottom})
     el.classList.remove('active')
-  }
-
-  onClickPopOut (e) {
-    beaker.browser.openUrl(location.toString(), {setActive: true, adjacentActive: true})
-    beaker.shell.executeSidebarCommand('hide-panel', 'files-explorer-app')
-  }
-
-  async onClickNewDrive (e) {
-    e.preventDefault()
-    e.stopPropagation()
-    var drive = await beaker.hyperdrive.createDrive()
-    toast.create('Drive created')
-    loc.openUrl(drive.url)
   }
 
   async onNewFile (e) {
