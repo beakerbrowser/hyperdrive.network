@@ -10,7 +10,7 @@ import { toSimpleItemGroups, getSubicon } from './lib/files.js'
 import * as loc from './lib/location.js'
 import { constructItems as constructContextMenuItems } from './lib/context-menu.js'
 import * as settingsMenu from './com/settings-menu.js'
-import { getDriveTitle, getGlobalSavedConfig, setGlobalSavedConfig, getSavedConfig, setSavedConfig, getVFCfg } from './lib/config.js'
+import { getDriveTitle, getGlobalSavedConfig, setGlobalSavedConfig, getVFCfg } from './lib/config.js'
 import { validateViewfile } from './lib/viewfile.js'
 import mainCSS from '../css/main.css.js'
 import './view/file.js'
@@ -184,9 +184,9 @@ export class ExplorerApp extends LitElement {
 
     // view config
     if (this.pathInfo.isDirectory()) {
-      this.renderMode = getSavedConfig('render-mode', 'grid')
-      this.inlineMode = Boolean(getSavedConfig('inline-mode', false))
-      this.sortMode = getSavedConfig('sort-mode', 'name')
+      this.renderMode = getGlobalSavedConfig('render-mode', 'grid')
+      this.inlineMode = Boolean(getGlobalSavedConfig('inline-mode', false))
+      this.sortMode = getGlobalSavedConfig('sort-mode', 'name')
       if (!this.watchStream) {
         let currentDrive = beaker.hyperdrive.drive(this.currentDriveInfo.url)
         this.watchStream = currentDrive.watch(this.realPathname)
@@ -201,11 +201,11 @@ export class ExplorerApp extends LitElement {
         })
       }
     } else if (loc.getPath().endsWith('.view')) {
-      this.renderMode = getSavedConfig('render-mode', getVFCfg(this.viewfileObj, 'renderMode', ['grid', 'list']) || 'grid')
-      this.inlineMode = Boolean(getSavedConfig('inline-mode', getVFCfg(this.viewfileObj, 'inline', [true, false]) || false))
-      this.sortMode = getSavedConfig('sort-mode', 'name') // TODO
+      this.renderMode = getGlobalSavedConfig('render-mode', getVFCfg(this.viewfileObj, 'renderMode', ['grid', 'list']) || 'grid')
+      this.inlineMode = Boolean(getGlobalSavedConfig('inline-mode', getVFCfg(this.viewfileObj, 'inline', [true, false]) || false))
+      this.sortMode = getGlobalSavedConfig('sort-mode', 'name') // TODO
     } else {
-      this.renderMode = getSavedConfig('render-mode', 'default')
+      this.renderMode = getGlobalSavedConfig('render-mode', 'default')
     }
     this.hideNavLeft = Boolean(getGlobalSavedConfig('hide-nav-left', true))
     this.hideNavRight = Boolean(getGlobalSavedConfig('hide-nav-right', false))
@@ -696,29 +696,30 @@ export class ExplorerApp extends LitElement {
 
   onChangeRenderMode (e, renderMode) {
     this.renderMode = renderMode
-    setSavedConfig('render-mode', this.renderMode)
+    setGlobalSavedConfig('render-mode', this.renderMode)
     this.requestUpdate()
   }
 
   onToggleInlineMode (e) {
     this.inlineMode = !this.inlineMode
-    setSavedConfig('inline-mode', this.inlineMode ? '1' : '')
+    setGlobalSavedConfig('inline-mode', this.inlineMode ? '1' : '')
     this.requestUpdate()
   }
 
   onChangeSortMode (e) {
     this.sortMode = e.target.value
     this.sortItems(this.items)
-    setSavedConfig('sort-mode', this.sortMode)
+    setGlobalSavedConfig('sort-mode', this.sortMode)
     this.requestUpdate()
   }
 
-  onApplyViewSettingsGlobally (e) {
-    setGlobalSavedConfig('render-mode', this.renderMode)
-    setGlobalSavedConfig('inline-mode', this.inlineMode ? '1' : '')
-    setGlobalSavedConfig('sort-mode', this.sortMode)
-    toast.create('Default view settings updated')
-  }
+  // NOTE All settings are saved globally now -prf
+  // onApplyViewSettingsGlobally () {
+  //   setGlobalSavedConfig('render-mode', this.renderMode)
+  //   setGlobalSavedConfig('inline-mode', this.inlineMode ? '1' : '')
+  //   setGlobalSavedConfig('sort-mode', this.sortMode)
+  //   toast.create('Default view settings updated')
+  // }
 
   toggleNav (side) {
     if (side === 'left') {
