@@ -58,5 +58,13 @@ h4 {
   right: -100%;
 }
 
+.readme {
+  padding: 10px;
+}
+
+:host(.drag-selector-active) .readme {
+  user-select: none;
+}
+
 `
 export default cssStr

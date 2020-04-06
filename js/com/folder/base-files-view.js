@@ -46,6 +46,7 @@ export class BaseFilesView extends LitElement {
     setTimeout(() => {
       if (this.dragSelector && this.dragSelector.el) {
         this.dragSelector.el.remove()
+        this.classList.remove('drag-selector-active')
       }
       this.dragSelector = undefined
     }, 1)
@@ -78,10 +79,16 @@ export class BaseFilesView extends LitElement {
     Array.from(this.shadowRoot.querySelectorAll('.drag-hover'), el => el.classList.remove('drag-hover'))
   }
 
+  getInlineMdItem () {
+    var md = this.items.find(item => item.name.toLowerCase() === 'readme.md')
+    if (md) return md
+  }
+
   // rendering
   // =
 
   render () {
+    var inlineMdItem = this.getInlineMdItem()
     var isEmpty = this.itemGroups.reduce((acc, group) => acc && group.length === 0, true)
     return html`
       <link rel="stylesheet" href="/css/font-awesome.css">
@@ -109,6 +116,20 @@ export class BaseFilesView extends LitElement {
         ${isEmpty ? html`
           <div class="empty">This folder is empty</div>
         ` : ''}
+        ${inlineMdItem ? html`
+          <h4>Readme</h4>
+          <div class="readme">
+            <file-display
+              drive-url=${inlineMdItem.drive.url}
+              pathname=${inlineMdItem.realPath}
+              .info=${inlineMdItem}
+            ></file-display>
+          </div>
+        ` : /*this.currentDriveInfo.writable ? html`
+          <div class="readme">
+            <a class="add-readme-link" href="#" @click=${this.onAddReadme}>+ Add README.md</a>
+          </div>
+        ` :*/ ''}
       </div>
     `
   }
@@ -202,7 +223,7 @@ export class BaseFilesView extends LitElement {
   }
 
   onMousedownContainer (e) {
-    if (!this.dragSelector) {
+    if (!this.dragSelector && !findParent(e.target, 'readme')) {
       // start tracking the drag-selection positions but dont create the element
       // until a certain number of pixels have been dragged over
       this.dragSelector = {
@@ -231,6 +252,7 @@ export class BaseFilesView extends LitElement {
           ) {
             this.dragSelector.el = createDragSelectorEl()
             this.shadowRoot.append(this.dragSelector.el)
+            this.classList.add('drag-selector-active')
             this.dragSelector.isActive = true
           }
         } 
