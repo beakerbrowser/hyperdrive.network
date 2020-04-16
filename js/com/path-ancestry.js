@@ -1,6 +1,7 @@
 import { LitElement, html } from '../../vendor/lit-element/lit-element.js'
 import { handleDragDrop } from '../lib/drag-drop.js'
 import { emit } from '../lib/dom.js'
+import { joinPath } from '../lib/strings.js'
 
 export class PathAncestry extends LitElement {
   static get properties () {
@@ -50,7 +51,7 @@ export class PathAncestry extends LitElement {
         <span class="fas fa-fw fa-angle-right"></span>
         <a
           class="name"
-          href=${this.driveInfo.url + item.path}
+          href=${joinPath(this.driveInfo.url, item.path)}
           @click=${this.onClickParentFolder}
           @dragenter=${this.onDragenter}
           @dragleave=${this.onDragleave}
