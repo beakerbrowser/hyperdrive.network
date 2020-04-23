@@ -423,7 +423,6 @@ export class ExplorerApp extends LitElement {
         @new-mount=${this.onNewMount}
         @fork-drive=${this.onForkDrive}
         @drive-properties=${this.onDriveProperties}
-        @import=${this.onImport}
         @export=${this.onExport}
         @rename=${this.onRename}
         @delete=${this.onDelete}
@@ -820,11 +819,24 @@ export class ExplorerApp extends LitElement {
     this.load()
   }
 
-  async onImport (e) {
+  async onImportFiles (e) {
     if (!this.currentDriveInfo.writable) return
     toast.create('Importing...')
     try {
       var {numImported} = await beaker.shell.importFilesDialog(loc.getUrl())
+      if (numImported > 0) toast.create('Import complete', 'success')
+      else toast.destroy()
+    } catch (e) {
+      console.log(e)
+      toast.create(e.toString(), 'error')
+    }
+  }
+
+  async onImportFolders (e) {
+    if (!this.currentDriveInfo.writable) return
+    toast.create('Importing...')
+    try {
+      var {numImported} = await beaker.shell.importFoldersDialog(loc.getUrl())
       if (numImported > 0) toast.create('Import complete', 'success')
       else toast.destroy()
     } catch (e) {

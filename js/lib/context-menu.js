@@ -167,9 +167,15 @@ export function constructItems (app) {
     })
     items.push({
       icon: 'fas fa-fw fa-file-import',
-      label: 'Import',
+      label: 'Import File(s)',
       disabled: !writable,
-      click: () => app.onImport()
+      click: () => app.onImportFiles()
+    })
+    items.push({
+      icon: 'fas fa-fw fa-file-import',
+      label: 'Import Folder(s)',
+      disabled: !writable,
+      click: () => app.onImportFolders()
     })
     items.push({
       icon: 'fas fa-fw fa-file-export',
