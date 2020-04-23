@@ -739,7 +739,7 @@ export class ExplorerApp extends LitElement {
     e.stopPropagation()
     let rect = e.currentTarget.getClientRects()[0]
     el.classList.add('active')
-    await this.onShowMenu({detail: {x: rect.right, y: rect.bottom, right: true}})
+    await this.onShowMenu({detail: {x: rect.right, y: rect.bottom, right: true}}, true)
     el.classList.remove('active')
   }
 
@@ -935,18 +935,33 @@ export class ExplorerApp extends LitElement {
     }
   }
 
-  onShowMenu (e) {
-    return contextMenu.create({
-      x: e.detail.x,
-      y: e.detail.y,
-      right: e.detail.right || (e.detail.x > document.body.scrollWidth - 300),
-      top: (e.detail.y > document.body.scrollHeight / 2),
-      roomy: false,
-      noBorders: true,
-      fontAwesomeCSSUrl: '/css/font-awesome.css',
-      style: `padding: 4px 0`,
-      items: constructContextMenuItems(this)
-    })
+  async onShowMenu (e, useAppMenuAlways = false) {
+    var items = constructContextMenuItems(this)
+    if (!useAppMenuAlways && typeof beaker !== 'undefined' && typeof beaker.browser !== 'undefined') {
+      let fns = {}
+      for (let i = 0; i < items.length; i++) {
+        let id = `item=${i}`
+        if (items[i] === '-') items[i] = {type: 'separator'}
+        items[i].id = id
+        fns[id] = items[i].click
+        delete items[i].icon
+        delete items[i].click
+      }
+      var choice = await beaker.browser.showContextMenu(items)
+      if (fns[choice]) fns[choice]()
+    } else {
+      return contextMenu.create({
+        x: e.detail.x,
+        y: e.detail.y,
+        right: e.detail.right || (e.detail.x > document.body.scrollWidth - 300),
+        top: (e.detail.y > document.body.scrollHeight / 2),
+        roomy: false,
+        noBorders: true,
+        fontAwesomeCSSUrl: '/css/font-awesome.css',
+        style: `padding: 4px 0`,
+        items
+      })
+    }
   }
 
   onClickShare (e) {
